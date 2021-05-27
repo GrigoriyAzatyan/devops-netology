@@ -49,10 +49,10 @@ Ctrl-Alt-F3
 Переменные окружения для процесса текущей оболочки.  
 `ps e -p $$`
 
-## 10. Используя man, опишите что доступно по адресам /proc/<PID>/cmdline, /proc/<PID>/exe.  
+## 10. Используя man, опишите что доступно по адресам /proc/PID/cmdline, /proc/PID/exe.  
 */proc/[pid]/cmdline*     
 *              This read-only file holds the complete command line for the process, unless the process is a zombie.  In the latter case, there is nothing in this file: that is,* *a read on this file will return 0 characters.  The command-line arguments appear in this file as a set of strings separated by null bytes ('\0'), with a further null byte* *after the last string.*  
-**/proc/<PID>/cmdline - строка с параметрами запуска исполняемого файла процесса.**
+**/proc/[pid]/cmdline - строка с параметрами запуска исполняемого файла процесса.**
   
  */proc/[pid]/exe*   
 *              Under  Linux  2.2  and later, this file is a symbolic link containing the actual pathname of the executed command.  This symbolic link can be dereferenced normally; attempting to open it will open the executable.  You can even type /proc/[pid]/exe to run another copy of the same executable that is being run by process [pid]. If the pathname has been unlinked, the symbolic link will contain the string '(deleted)'  appended  to  the original pathname.  In a multithreaded process, the contents of this symbolic link are not available if the main thread has already terminated (typically by calling pthread_exit(3)).  
@@ -72,6 +72,7 @@ not a tty
 man ssh позволяет найти такую информацию:   
           -t      Force pseudo-terminal allocation.  This can be used to execute arbitrary screen-based programs on a remote machine, which can be very useful, e.g. when implementing menu services.  Multiple -t options force tty allocation, even if ssh has no local tty.     
 
+**Ответ:**  
 Очевидно, по умолчанию псевдотерминал не выделяется для удаленного запуска команды.
 С ключом -t команда срабатывает:  
 **ssh -t localhost 'tty'**    
