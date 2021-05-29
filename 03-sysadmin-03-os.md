@@ -3,6 +3,10 @@
 Ответ:  
 `strace -o output.log /bin/bash -c 'cd /tmp' && egrep *tmp output.log`
 
+**chdir("/tmp")                           = 0**
+
+
+
 ## 2. Попробуйте использовать команду file на объекты разных типов на файловой системе. Например:  
     vagrant@netology1:~$ file /dev/tty
     /dev/tty: character special (5/0)
