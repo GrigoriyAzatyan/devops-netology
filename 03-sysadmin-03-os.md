@@ -71,7 +71,7 @@ root@vagrant:~# dpkg -L bpfcc-tools | grep sbin/opensnoop
 /usr/sbin/opensnoop-bpfcc
 На какие файлы вы увидели вызовы группы open за первую секунду работы утилиты? Воспользуйтесь пакетом bpfcc-tools для Ubuntu 20.04. Дополнительные сведения по установке.
 
-**Ответ:**  
+**Ответ:**   
 /usr/sbin/opensnoop-bpfcc  
       `PID    COMM               FD ERR PATH`  
       `1856   vminfo              4   0 /var/run/utmp`    
@@ -118,7 +118,7 @@ set -o pipefail - прекращает выполнение скрипта, да
 
 ## 9. Используя -o stat для ps, определите, какой наиболее часто встречающийся статус у процессов в системе. В man ps ознакомьтесь (/PROCESS STATE CODES) что значат дополнительные к основной заглавной буквы статуса процессов. Его можно не учитывать при расчете (считать S, Ss или Ssl равнозначными).
 
-**Ответ:** 
+**Ответ:**   
 `ps -ao stat,command`
 `STAT COMMAND`  
 `S+   dbus-run-session -- gnome-session --autostart /usr/share/gdm/greeter/autostart`  
@@ -128,12 +128,12 @@ set -o pipefail - прекращает выполнение скрипта, да
 `R+   ps -ao stat,command ` 
 
 Наиболее частый статус:   
-S    interruptible sleep (waiting for an event to complete)  
+**S    interruptible sleep (waiting for an event to complete)  **   
 
-Дополнительные буквы:   
-               <    high-priority (not nice to other users)  
-               N    low-priority (nice to other users)  
-               L    has pages locked into memory (for real-time and custom IO)  
-               s    is a session leader  
-               l    is multi-threaded (using CLONE_THREAD, like NPTL pthreads do)  
-               +    is in the foreground process group  
+Дополнительные буквы:     
+* <    high-priority (not nice to other users)  
+* N    low-priority (nice to other users)  
+* L    has pages locked into memory (for real-time and custom IO)  
+* s    is a session leader  
+* l    is multi-threaded (using CLONE_THREAD, like NPTL pthreads do)  
+* +    is in the foreground process group  
