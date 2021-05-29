@@ -63,18 +63,53 @@ man magic указывает на такую информацию:
 
 
 ## 4. Занимают ли зомби-процессы какие-то ресурсы в ОС (CPU, RAM, IO)?
-
+Зомби не занимают памяти (как процессы-сироты), но блокируют записи в таблице процессов, размер которой ограничен для каждого пользователя и системы в целом.
+https://ru.wikipedia.org/wiki/%D0%9F%D1%80%D0%BE%D1%86%D0%B5%D1%81%D1%81-%D0%B7%D0%BE%D0%BC%D0%B1%D0%B8#%D0%92%D0%BE%D0%B7%D0%BD%D0%B8%D0%BA%D0%BD%D0%BE%D0%B2%D0%B5%D0%BD%D0%B8%D0%B5_%D0%B7%D0%BE%D0%BC%D0%B1%D0%B8
 
 ## 5. В iovisor BCC есть утилита opensnoop:
 root@vagrant:~# dpkg -L bpfcc-tools | grep sbin/opensnoop
 /usr/sbin/opensnoop-bpfcc
 На какие файлы вы увидели вызовы группы open за первую секунду работы утилиты? Воспользуйтесь пакетом bpfcc-tools для Ubuntu 20.04. Дополнительные сведения по установке.
+
+**Ответ:**  
+/usr/sbin/opensnoop-bpfcc  
+      `PID    COMM               FD ERR PATH`  
+      `1856   vminfo              4   0 /var/run/utmp`    
+      `626    dbus-daemon        -1   2 /usr/local/share/dbus-1/system-services`  
+      `626    dbus-daemon        28   0 /usr/share/dbus-1/system-services`  
+      `626    dbus-daemon        -1   2 /lib/dbus-1/system-services`  
+      `626    dbus-daemon        28   0 /var/lib/snapd/dbus-1/system-services/`  
+      `2496   gnome-shell        27   0 /proc/self/stat`  
+
+
 ## 6. Какой системный вызов использует uname -a? Приведите цитату из man по этому системному вызову, где описывается альтернативное местоположение в /proc, где можно узнать версию ядра и релиз ОС.
+
+**Ответ:**  
+    `uname({sysname="Linux", nodename="ubuntu-20", ...}) = 0`  
+    `fstat(1, {st_mode=S_IFCHR|0620, st_rdev=makedev(0x88, 0x1), ...}) = 0`  
+    `uname({sysname="Linux", nodename="ubuntu-20", ...}) = 0`  
+    `uname({sysname="Linux", nodename="ubuntu-20", ...}) = 0`  
+    `write(1, "Linux ubuntu-20 5.8.0-53-generic"..., 115) = 115 ` 
+
+**man 2 uname**
+* Part of the utsname information is also accessible via /proc/sys/kernel/{ostype, hostname, osrelease, version, domainname}.
+
+
 ## 7. Чем отличается последовательность команд через ; и через && в bash? Например:
 root@netology1:~# test -d /tmp/some_dir; echo Hi
 Hi
 root@netology1:~# test -d /tmp/some_dir && echo Hi
 root@netology1:~#
 Есть ли смысл использовать в bash &&, если применить set -e?
+
+**Ответы:**
+- С использованем ; обе команды отработают в любом случае.    
+- С использованием && вторая команда отработает только при успешном результате первой.  
+- С применением set -e оболочка завершит работу при ненулевом коде возврата команды. В принципе, конструкция с && работать будет, но она необязательна, т.к. при другом условии оболочка просто завершится. 
+- 
 ## 8. Из каких опций состоит режим bash set -euxo pipefail и почему его хорошо было бы использовать в сценариях?
+
+
 ## 9. Используя -o stat для ps, определите, какой наиболее часто встречающийся статус у процессов в системе. В man ps ознакомьтесь (/PROCESS STATE CODES) что значат дополнительные к основной заглавной буквы статуса процессов. Его можно не учитывать при расчете (считать S, Ss или Ssl равнозначными).
+
+
