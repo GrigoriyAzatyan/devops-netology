@@ -36,10 +36,41 @@ man magic указывает на такую информацию:
 
 ## 3. Предположим, приложение пишет лог в текстовый файл. Этот файл оказался удален (deleted в lsof), однако возможности сигналом сказать приложению переоткрыть файлы или просто перезапустить приложение – нет. Так как приложение продолжает писать в удаленный файл, место на диске постепенно заканчивается. Основываясь на знаниях о перенаправлении потоков, предложите способ обнуления открытого удаленного файла (чтобы освободить место на файловой системе).
 
+Смоделируем нехорошую ситуацию:  
+`ping 8.8.8.8 >> ~/output.log   `    
+`sudo rm -rf output.log  `  
+`sudo lsof | grep output.log  `  
 
+    ping      7770      grigorii_azatyan    1w      REG      8,5    73432    1453088 /home/grigorii_azatyan/output.log (deleted)  
+
+Видим: PID 7770, файловый дескриптор 1.  
+Значит, можно найти этот файловый дескриптор в /proc/7770/fd/1 и записать туда пустоту:
+sudo su
+> /proc/7770/fd/1
+cat /proc/7770/fd/1
+    64 bytes from 8.8.8.8: icmp_seq=1108 ttl=109 time=44.9 ms
+    64 bytes from 8.8.8.8: icmp_seq=1109 ttl=109 time=47.9 ms
+    64 bytes from 8.8.8.8: icmp_seq=1110 ttl=109 time=44.9 ms
+    64 bytes from 8.8.8.8: icmp_seq=1111 ttl=109 time=45.3 ms
+    64 bytes from 8.8.8.8: icmp_seq=1112 ttl=109 time=44.6 ms
+    64 bytes from 8.8.8.8: icmp_seq=1113 ttl=109 time=46.4 ms
+    64 bytes from 8.8.8.8: icmp_seq=1114 ttl=109 time=44.4 ms
+    64 bytes from 8.8.8.8: icmp_seq=1115 ttl=109 time=45.1 ms
+    64 bytes from 8.8.8.8: icmp_seq=1116 ttl=109 time=44.0 ms
+    64 bytes from 8.8.8.8: icmp_seq=1117 ttl=109 time=45.3 ms
+    64 bytes from 8.8.8.8: icmp_seq=1118 ttl=109 time=50.6 ms
+    64 bytes from 8.8.8.8: icmp_seq=1119 ttl=109 time=48.8 ms
+    64 bytes from 8.8.8.8: icmp_seq=1120 ttl=109 time=47.3 ms
+    64 bytes from 8.8.8.8: icmp_seq=1121 ttl=109 time=44.5 ms
+
+**Результат:**
+Файл обнулился на момент выполнения команды, что и требовалось в задании. Однако, команда ping продолжает сливать помои на жесткий диск.   
+Впрочем, это уже другая история.
 
 
 ## 4. Занимают ли зомби-процессы какие-то ресурсы в ОС (CPU, RAM, IO)?
+
+
 ## 5. В iovisor BCC есть утилита opensnoop:
 root@vagrant:~# dpkg -L bpfcc-tools | grep sbin/opensnoop
 /usr/sbin/opensnoop-bpfcc
