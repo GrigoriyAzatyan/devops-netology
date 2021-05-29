@@ -105,11 +105,35 @@ root@netology1:~#
 **Ответы:**
 - С использованем ; обе команды отработают в любом случае.    
 - С использованием && вторая команда отработает только при успешном результате первой.  
-- С применением set -e оболочка завершит работу при ненулевом коде возврата команды. В принципе, конструкция с && работать будет, но она необязательна, т.к. при другом условии оболочка просто завершится. 
-- 
+- С применением set -e скрипт/оболочка завершит работу при ненулевом коде возврата команды. В принципе, конструкция с && работать будет, но она необязательна, т.к. при другом условии оболочка просто завершится. 
+
 ## 8. Из каких опций состоит режим bash set -euxo pipefail и почему его хорошо было бы использовать в сценариях?
 
+**Ответ:**
+set -e прекращает выполнение скрипта, если команда завершилась ошибкой.  
+set -u - прекращает выполнение скрипта, если встретилась несуществующая переменная.  
+set -x - выводит выполняемые команды в stdout перед выполненинем.  
+set -o pipefail - прекращает выполнение скрипта, даже если одна из частей пайпа завершилась ошибкой. В этом случае bash-скрипт завершит выполнение, если mycommand вернёт ошибку, не смотря на true в конце пайплайна: mycommand | true.  
+Красиво и безопасно.  
 
 ## 9. Используя -o stat для ps, определите, какой наиболее часто встречающийся статус у процессов в системе. В man ps ознакомьтесь (/PROCESS STATE CODES) что значат дополнительные к основной заглавной буквы статуса процессов. Его можно не учитывать при расчете (считать S, Ss или Ssl равнозначными).
 
+**Ответ:** 
+`ps -ao stat,command`
+`STAT COMMAND`  
+`S+   dbus-run-session -- gnome-session --autostart /usr/share/gdm/greeter/autostart`  
+`Sl+  /usr/libexec/gnome-session-binary --systemd --autostart /usr/share/gdm/greeter/autostart`  
+`Sl   /usr/libexec/ibus-engine-simple`  
+`...`  
+`R+   ps -ao stat,command ` 
 
+Наиболее частый статус:   
+S    interruptible sleep (waiting for an event to complete)  
+
+Дополнительные буквы:   
+               <    high-priority (not nice to other users)  
+               N    low-priority (nice to other users)  
+               L    has pages locked into memory (for real-time and custom IO)  
+               s    is a session leader  
+               l    is multi-threaded (using CLONE_THREAD, like NPTL pthreads do)  
+               +    is in the foreground process group  
