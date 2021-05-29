@@ -20,13 +20,13 @@ man magic указывает на такую информацию:
 Попробуем выполнить file /bin/bash, отфильтровав результат:   
 `strace -o output.log /bin/bash -c 'file /bin/bash' && cat output.log | grep magic`
 
-    openat(AT_FDCWD, "/lib/x86_64-linux-gnu/libmagic.so.1", O_RDONLY|O_CLOEXEC) = 3
-    stat("/home/grigorii_azatyan/.magic.mgc", 0x7ffe5073a820) = -1 ENOENT (Нет такого файла или каталога)
-    stat("/home/grigorii_azatyan/.magic", 0x7ffe5073a820) = -1 ENOENT (Нет такого файла или каталога)
-    openat(AT_FDCWD, "/etc/magic.mgc", O_RDONLY) = -1 ENOENT (Нет такого файла или каталога)
-    stat("/etc/magic", {st_mode=S_IFREG|0644, st_size=111, ...}) = 0
-    openat(AT_FDCWD, "/etc/magic", O_RDONLY) = 3
-    openat(AT_FDCWD, "/usr/share/misc/magic.mgc", O_RDONLY) = 3
+    openat(AT_FDCWD, "/lib/x86_64-linux-gnu/libmagic.so.1", O_RDONLY|O_CLOEXEC) = 3   
+    stat("/home/grigorii_azatyan/.magic.mgc", 0x7ffe5073a820) = -1 ENOENT (Нет такого файла или каталога)   
+    stat("/home/grigorii_azatyan/.magic", 0x7ffe5073a820) = -1 ENOENT (Нет такого файла или каталога)   
+    openat(AT_FDCWD, "/etc/magic.mgc", O_RDONLY) = -1 ENOENT (Нет такого файла или каталога)   
+    stat("/etc/magic", {st_mode=S_IFREG|0644, st_size=111, ...}) = 0   
+    openat(AT_FDCWD, "/etc/magic", O_RDONLY) = 3   
+    openat(AT_FDCWD, "/usr/share/misc/magic.mgc", O_RDONLY) = 3   
 
 Результат:  
  - Видим обращение к библиотеке **/lib/x86_64-linux-gnu/libmagic.so.1**;
@@ -44,28 +44,22 @@ man magic указывает на такую информацию:
     ping      7770      grigorii_azatyan    1w      REG      8,5    73432    1453088 /home/grigorii_azatyan/output.log (deleted)  
 
 Видим: PID 7770, файловый дескриптор 1.  
-Значит, можно найти этот файловый дескриптор в /proc/7770/fd/1 и записать туда пустоту:
-sudo su
-> /proc/7770/fd/1
-cat /proc/7770/fd/1
-    64 bytes from 8.8.8.8: icmp_seq=1108 ttl=109 time=44.9 ms
-    64 bytes from 8.8.8.8: icmp_seq=1109 ttl=109 time=47.9 ms
-    64 bytes from 8.8.8.8: icmp_seq=1110 ttl=109 time=44.9 ms
-    64 bytes from 8.8.8.8: icmp_seq=1111 ttl=109 time=45.3 ms
-    64 bytes from 8.8.8.8: icmp_seq=1112 ttl=109 time=44.6 ms
-    64 bytes from 8.8.8.8: icmp_seq=1113 ttl=109 time=46.4 ms
-    64 bytes from 8.8.8.8: icmp_seq=1114 ttl=109 time=44.4 ms
-    64 bytes from 8.8.8.8: icmp_seq=1115 ttl=109 time=45.1 ms
-    64 bytes from 8.8.8.8: icmp_seq=1116 ttl=109 time=44.0 ms
-    64 bytes from 8.8.8.8: icmp_seq=1117 ttl=109 time=45.3 ms
-    64 bytes from 8.8.8.8: icmp_seq=1118 ttl=109 time=50.6 ms
-    64 bytes from 8.8.8.8: icmp_seq=1119 ttl=109 time=48.8 ms
-    64 bytes from 8.8.8.8: icmp_seq=1120 ttl=109 time=47.3 ms
-    64 bytes from 8.8.8.8: icmp_seq=1121 ttl=109 time=44.5 ms
+Значит, можно найти этот файловый дескриптор в /proc/7770/fd/1 и записать туда пустоту:        
+`sudo su`   
+`> /proc/7770/fd/1`    
 
-**Результат:**
-Файл обнулился на момент выполнения команды, что и требовалось в задании. Однако, команда ping продолжает сливать помои на жесткий диск.   
-Впрочем, это уже другая история.
+**Результат:**    
+`cat /proc/7770/fd/1  `  
+
+    64 bytes from 8.8.8.8: icmp_seq=1108 ttl=109 time=44.9 ms   
+    64 bytes from 8.8.8.8: icmp_seq=1109 ttl=109 time=47.9 ms   
+    64 bytes from 8.8.8.8: icmp_seq=1110 ttl=109 time=44.9 ms    
+    64 bytes from 8.8.8.8: icmp_seq=1111 ttl=109 time=45.3 ms   
+    64 bytes from 8.8.8.8: icmp_seq=1112 ttl=109 time=44.6 ms   
+    64 bytes from 8.8.8.8: icmp_seq=1113 ttl=109 time=46.4 ms   
+    64 bytes from 8.8.8.8: icmp_seq=1114 ttl=109 time=44.4 ms   
+  
+Файл обнулился на момент выполнения команды, что и требовалось в задании. Однако, команда ping продолжает сливать помои на жесткий диск. Впрочем, это уже другая история.
 
 
 ## 4. Занимают ли зомби-процессы какие-то ресурсы в ОС (CPU, RAM, IO)?
