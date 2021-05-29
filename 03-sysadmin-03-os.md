@@ -128,7 +128,7 @@ set -o pipefail - прекращает выполнение скрипта, да
 `R+   ps -ao stat,command ` 
 
 Наиболее частый статус:   
-**S    interruptible sleep (waiting for an event to complete)  **   
+**S    interruptible sleep (waiting for an event to complete)**   
 
 Дополнительные буквы:     
 * <    high-priority (not nice to other users)  
@@ -136,4 +136,4 @@ set -o pipefail - прекращает выполнение скрипта, да
 * L    has pages locked into memory (for real-time and custom IO)  
 * s    is a session leader  
 * l    is multi-threaded (using CLONE_THREAD, like NPTL pthreads do)  
-* +    is in the foreground process group  
+* \+    is in the foreground process group  
