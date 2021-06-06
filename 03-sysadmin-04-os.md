@@ -22,18 +22,22 @@ cat /etc/systemd/system/node_exporter.service
       [Install]  
       WantedBy=multi-user.target  
 
-# systemctl status node_exporter
-`● node_exporter.service - Node Exporter`
-`     Loaded: loaded (/etc/systemd/system/node_exporter.service; enabled; vendor preset: enabled)`
-`     Active: active (running) since Sun 2021-06-06 11:35:48 UTC; 2min 10s ago`
-`   Main PID: 7153 (node_exporter)`
-`      Tasks: 6 (limit: 1122)`
-`     Memory: 10.8M`
-`     CGroup: /system.slice/node_exporter.service`
-`             └─7153 /usr/local/bin/node_exporter`
+**# systemctl status node_exporter**  
+● node_exporter.service - Node Exporter  
+     `Loaded: loaded (/etc/systemd/system/node_exporter.service; enabled; vendor preset: enabled)`    
+     `Active: active (running) since Sun 2021-06-06 11:35:48 UTC; 2min 10s ago`    
+     `Main PID: 7153 (node_exporter)`    
+       `Tasks: 6 (limit: 1122)`   
+      `Memory: 10.8M`    
+      `CGroup: /system.slice/node_exporter.service`    
+              `└─7153 /usr/local/bin/node_exporter` 
 
 
 ## 2. Ознакомьтесь с опциями node_exporter и выводом /metrics по-умолчанию. Приведите несколько опций, которые вы бы выбрали для базового мониторинга хоста по CPU, памяти, диску и сети.
+
+**Ответ:**  
+--collector.disable-defaults --collector.meminfo --collector.loadavg --collector.filesystem
+
 
 ## 3. Установите в свою виртуальную машину Netdata. Воспользуйтесь готовыми пакетами для установки (sudo apt install -y netdata). После успешной установки:
 * в конфигурационном файле /etc/netdata/netdata.conf в секции [web] замените значение с localhost на bind to = 0.0.0.0,
@@ -42,9 +46,10 @@ config.vm.network "forwarded_port", guest: 19999, host: 19999
 После успешной перезагрузки в браузере на своем ПК (не в виртуальной машине) вы должны суметь зайти на localhost:19999. 
 Ознакомьтесь с метриками, которые по умолчанию собираются Netdata и с комментариями, которые даны к этим метрикам.
 
-
+[![Результат](https://yadi.sk/i/Js2UWft76ntq-Q)](https://yadi.sk/i/Js2UWft76ntq-Q)
 
 ## 4. Можно ли по выводу dmesg понять, осознает ли ОС, что загружена не на настоящем оборудовании, а на системе виртуализации?
+
 
 ## 5. Как настроен sysctl fs.nr_open на системе по-умолчанию? Узнайте, что означает этот параметр. Какой другой существующий лимит не позволит достичь такого числа (ulimit --help)?
 
