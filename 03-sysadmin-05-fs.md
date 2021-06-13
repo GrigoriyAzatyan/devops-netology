@@ -29,10 +29,51 @@
 Данная конфигурация создаст новую виртуальную машину с двумя дополнительными неразмеченными дисками по 2.5 Гб.
 
 ## 4. Используя fdisk, разбейте первый диск на 2 раздела: 2 Гб, оставшееся пространство.
+    fdisk /dev/sdb
+    n
+    Primary  
+    +2G
+    n
+    Extended  
+    <Enter>
+    w
+    
+**Результат:**  
+    Command (m for help): i  
+Partition number (1,2, default 2): 1  
+
+         Device: /dev/sdb1  
+          Start: 2048  
+            End: 4196351  
+        Sectors: 4194304  
+      Cylinders: 262  
+           Size: 2G  
+             Id: 83  
+           Type: Linux  
+    Start-C/H/S: 0/32/33  
+      End-C/H/S: 261/53/48  
+  
+Command (m for help): i  
+Partition number (1,2, default 2): 2  
+
+         Device: /dev/sdb2  
+          Start: 4196352  
+            End: 5242879  
+        Sectors: 1046528  
+      Cylinders: 66  
+           Size: 511M  
+             Id: 5  
+           Type: Extended  
+    Start-C/H/S: 261/53/49  
+      End-C/H/S: 326/90/20  
+
 
 ## 5. Используя sfdisk, перенесите данную таблицу разделов на второй диск.
+    sfdisk --dump /dev/sdb > ~/sdb.dump  
+    sfdisk /dev/sdc < ~/sdb.dump  
 
 ## 6. Соберите mdadm RAID1 на паре разделов 2 Гб.
+
 
 ## 7. Соберите mdadm RAID0 на второй паре маленьких разделов.
 
