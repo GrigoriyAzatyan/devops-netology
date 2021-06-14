@@ -113,26 +113,9 @@ Partition number (1,2, default 2): 2
     wget https://mirror.yandex.ru/ubuntu/ls-lR.gz -O /tmp/new/test.gz
 
 ## 14. Прикрепите вывод lsblk.  
-lsblk  
-        NAME                 MAJ:MIN RM  SIZE RO TYPE  MOUNTPOINT  
-        sda                    8:0    0   64G  0 disk  
-        ├─sda1                 8:1    0  512M  0 part  /boot/efi  
-        ├─sda2                 8:2    0    1K  0 part  
-        └─sda5                 8:5    0 63.5G  0 part  
-          ├─vgvagrant-root   253:0    0 62.6G  0 lvm   /  
-          └─vgvagrant-swap_1 253:1    0  980M  0 lvm   [SWAP]  
-        sdb                    8:16   0  2.5G  0 disk  
-        ├─sdb1                 8:17   0    2G  0 part  
-        │ └─md0                9:0    0    2G  0 raid1  
-        └─sdb2                 8:18   0  511M  0 part  
-          └─md1                9:1    0 1018M  0 raid0  
-            └─my_vg-my_lv1   253:2    0  100M  0 lvm   /tmp/new  
-        sdc                    8:32   0  2.5G  0 disk  
-        ├─sdc1                 8:33   0    2G  0 part  
-        │ └─md0                9:0    0    2G  0 raid1  
-        └─sdc2                 8:34   0  511M  0 part  
-          └─md1                9:1    0 1018M  0 raid0  
-            └─my_vg-my_lv1   253:2    0  100M  0 lvm   /tmp/new  
+lsblk    
+У меня такой вывод и был, это Markdown сбивает отступы.  
+Вот скриншот: https://yadi.sk/i/2t4OO3P4_WCGAg
     
 ## 15. Протестируйте целостность файла:
 
@@ -160,4 +143,5 @@ lsblk
 0  
 
 ## 20. Погасите тестовый хост, vagrant destroy.
-Сделано.  
+Сделано.  После перемещения видно, что логический том находится на устройстве md0 (RAID1): https://yadi.sk/i/ZVbIWb4tzOlzYA
+
