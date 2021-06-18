@@ -90,8 +90,18 @@ UNCONN          0               0                        127.0.0.53%lo:domain   
 * 9 портов tcp6 в состоянии LISTEN.
 * PIDы прилагаются.  
 
-
-
 ## 13. Какой ключ нужно добавить в tcpdump, чтобы он начал выводить не только заголовки, но и содержимое фреймов в текстовом виде? А в текстовом и шестнадцатиричном?
+В man tcpdump указано про ключи -e, -x, X, XX, позволяющие добавлять к выводимым данным заголовки канального уровня и содержимое *пакетов* в разном сочетании, однако ничего не написано про содержимое *фреймов*. 
+Из того, что я нашел в man tcpdump:   
+
+* Выводить с данными также заголовки 2-го уровня:  
+       -e     Print the link-level header on each dump line.  This can be used, for example, to print MAC layer addresses for protocols such as Ethernet and IEEE 802.11.
+ 
+* Выводить заголовки пакета и данные в пакете, БЕЗ заголовка 2-го уровня, в HEX и ASCII:  
+       -X     When parsing and printing, in addition to printing the headers of each packet, print the data of each packet (minus its link level header) in hex and ASCII.  This is very handy for analysing new protocols.
+	   
+* Выводить заголовки пакета и данные в пакете, включая  заголовок 2-го уровня, в HEX и ASCII:  
+       -XX    When parsing and printing, in addition to printing the headers of each packet, print the data of each packet, including its link level header, in hex and ASCII.
+       
 
 ## 14. Попробуйте собрать дамп трафика с помощью tcpdump на основном интерфейсе вашей виртуальной машины и посмотреть его через tshark или Wireshark (можно ограничить число пакетов -c 100). Встретились ли вам какие-то установленные флаги Internet Protocol (не флаги TCP, а флаги IP)? Узнайте, какие флаги бывают. Как на самом деле называется стандарт Ethernet, фреймы которого попали в ваш дамп? Можно ли где-то в дампе увидеть OUI?
