@@ -58,7 +58,39 @@ UNCONN          0               0                        127.0.0.53%lo:domain   
 
 **Рекомендуется к использованию:** для логирования нечасто возникающих важных событий.
 
-## 12. Сколько портов TCP находится в состоянии прослушивания на вашей виртуальной машине с Ubuntu, и каким процессам они принадлежат?
+## 12. Сколько портов TCP находится в состоянии прослушивания на вашей виртуальной машине с Ubuntu, и каким процессам они принадлежат?  
+**netstat -atpn**  
+`Активные соединения с интернетом (servers and established)`    
+`Proto Recv-Q Send-Q Local Address Foreign Address State       PID/Program name`    
+`tcp        0      0 0.0.0.0:2049            0.0.0.0:*               LISTEN      -`   
+`tcp        0      0 0.0.0.0:41935           0.0.0.0:*               LISTEN      -  `  
+`tcp        0      0 0.0.0.0:42287           0.0.0.0:*               LISTEN      809/rpc.mountd`    
+`tcp        0      0 0.0.0.0:111             0.0.0.0:*               LISTEN      1/init`    
+`tcp        0      0 0.0.0.0:49429           0.0.0.0:*               LISTEN      809/rpc.mountd`    
+`tcp        0      0 127.0.0.53:53           0.0.0.0:*               LISTEN      617/systemd-resolve`    
+`tcp        0      0 0.0.0.0:22              0.0.0.0:*               LISTEN      800/sshd: /usr/sbin`    
+`tcp        0      0 127.0.0.1:631           0.0.0.0:*               LISTEN      755/cupsd`    
+`tcp        0      0 127.0.0.1:25            0.0.0.0:*               LISTEN      1812/master`    
+`tcp        0      0 127.0.0.1:8125          0.0.0.0:*               LISTEN      1816/netdata`    
+`tcp        0      0 0.0.0.0:60413           0.0.0.0:*               LISTEN      809/rpc.mountd`    
+`tcp        0      0 127.0.0.1:19999         0.0.0.0:*               LISTEN      1816/netdata`    
+`tcp        0     64 192.168.1.104:22        192.168.1.103:52031     ESTABLISHED 3833/sshd: grigorii`    
+`tcp6       0      0 :::2049                 :::*                    LISTEN      -`    
+`tcp6       0      0 :::46667                :::*                    LISTEN      809/rpc.mountd`    
+`tcp6       0      0 :::111                  :::*                    LISTEN      1/init`    
+`tcp6       0      0 :::22                   :::*                    LISTEN      800/sshd: /usr/sbin`    
+`tcp6       0      0 ::1:631                 :::*                    LISTEN      755/cupsd`    
+`tcp6       0      0 ::1:25                  :::*                    LISTEN      1812/master`    
+`tcp6       0      0 :::41881                :::*                    LISTEN      -`    
+`tcp6       0      0 :::57465                :::*                    LISTEN      809/rpc.mountd`    
+`tcp6       0      0 :::53567                :::*                    LISTEN      809/rpc.mountd`    
+
+Итого:   
+* 12 портов tcp в состоянии LISTEN (22 в состоянии ESTABLISHED)  
+* 9 портов tcp6 в состоянии LISTEN.
+* PIDы прилагаются.  
+
+
 
 ## 13. Какой ключ нужно добавить в tcpdump, чтобы он начал выводить не только заголовки, но и содержимое фреймов в текстовом виде? А в текстовом и шестнадцатиричном?
 
