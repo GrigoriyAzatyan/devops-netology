@@ -88,6 +88,40 @@ iperf3 -c 10.0.0.49
 
 **Анализ сетевого дампа (команда запущена повторно, IP сервера и порт источника уже другие):**  
 
+**Кадры 1-2: ARP-запрос и ответ:**  
+
+    No.     Time                          Source                Destination           Protocol Length Info
+          1 2021-06-22 21:50:52,493785    IntelCor_13:2a:09     Broadcast             ARP      60     Who has 192.168.1.1? Tell 192.168.1.103
+
+    Frame 1: 60 bytes on wire (480 bits), 60 bytes captured (480 bits) on interface \Device\NPF_{BA46532C-F0D5-4BC0-8108-15770106582A}, id 0
+    Ethernet II, Src: IntelCor_13:2a:09 (14:f6:d8:13:2a:09), Dst: Broadcast (ff:ff:ff:ff:ff:ff)
+    Address Resolution Protocol (request)
+        Hardware type: Ethernet (1)
+        Protocol type: IPv4 (0x0800)
+        Hardware size: 6
+        Protocol size: 4
+        Opcode: request (1)
+        Sender MAC address: IntelCor_13:2a:09 (14:f6:d8:13:2a:09)
+        Sender IP address: 192.168.1.103
+        Target MAC address: 00:00:00_00:00:00 (00:00:00:00:00:00)
+        Target IP address: 192.168.1.1
+
+    No.     Time                          Source                Destination           Protocol Length Info
+          2 2021-06-22 21:50:52,495936    Tp-LinkT_0e:74:dc     IntelCor_13:2a:09     ARP      42     192.168.1.1 is at 98:da:c4:0e:74:dc
+
+    Frame 2: 42 bytes on wire (336 bits), 42 bytes captured (336 bits) on interface \Device\NPF_{BA46532C-F0D5-4BC0-8108-15770106582A}, id 0
+    Ethernet II, Src: Tp-LinkT_0e:74:dc (98:da:c4:0e:74:dc), Dst: IntelCor_13:2a:09 (14:f6:d8:13:2a:09)
+    Address Resolution Protocol (reply)
+        Hardware type: Ethernet (1)
+        Protocol type: IPv4 (0x0800)
+        Hardware size: 6
+        Protocol size: 4
+        Opcode: reply (2)
+        Sender MAC address: Tp-LinkT_0e:74:dc (98:da:c4:0e:74:dc)
+        Sender IP address: 192.168.1.1
+        Target MAC address: IntelCor_13:2a:09 (14:f6:d8:13:2a:09)
+        Target IP address: 192.168.1.103
+
 **Кадры 24-27: Запрос к Яндекс DNS и ответ от сервера на разрешение имени netology.ru:**  
 
     No.     Time                          Source                Destination           Protocol Length Info
