@@ -3,7 +3,55 @@
 Здесь вы можете увидеть и 200 и 400 мс вполне реального RTT. Подсчитайте, какого размера нужно окно TCP чтобы наполнить 1 Гбит/с канал при 300 мс RTT 
 (берем простую ситуацию без потери пакетов). Можно воспользоваться готовым калькулятором. Ознакомиться с формулами, по которым работает калькулятор можно, например, на Wiki.
 
-## 2. Во сколько раз упадет пропускная способность канала, если будет 1% потерь пакетов при передаче?
+## 2. Во сколько раз упадет пропускная способность канала, если будет 1% потерь пакетов при передаче?  
+Пробуем выполнить iperf между хостом и виртуальной машиной:  
+iperf3 -c 10.0.0.49  
+`Connecting to host 10.0.0.49, port 5201`  
+`[  5] local 10.0.0.41 port 58544 connected to 10.0.0.49 port 5201`  
+`[ ID] Interval           Transfer     Bitrate         Retr  Cwnd`  
+`[  5]   0.00-1.00   sec   283 MBytes  2.37 Gbits/sec    0    221 KBytes`  
+`[  5]   1.00-2.00   sec   281 MBytes  2.36 Gbits/sec    0    221 KBytes`  
+`[  5]   2.00-3.00   sec   287 MBytes  2.41 Gbits/sec    0    221 KBytes`  
+`[  5]   3.00-4.00   sec   282 MBytes  2.37 Gbits/sec    0    221 KBytes`  
+`[  5]   4.00-5.00   sec   280 MBytes  2.35 Gbits/sec    0    221 KBytes`  
+`[  5]   5.00-6.00   sec   288 MBytes  2.41 Gbits/sec    0    221 KBytes`  
+`[  5]   6.00-7.00   sec   288 MBytes  2.41 Gbits/sec    0    221 KBytes`  
+`[  5]   7.00-8.00   sec   286 MBytes  2.40 Gbits/sec    0    221 KBytes`  
+`[  5]   8.00-9.00   sec   286 MBytes  2.40 Gbits/sec    0    221 KBytes`  
+`[  5]   9.00-10.00  sec   286 MBytes  2.40 Gbits/sec    0    221 KBytes`  
+`- - - - - - - - - - - - - - - - - - - - - - - - -`  
+`[ ID] Interval           Transfer     Bitrate         Retr`  
+`[  5]   0.00-10.00  sec  2.78 GBytes  2.39 Gbits/sec    0             sender`  
+`[  5]   0.00-10.00  sec  2.78 GBytes  2.39 Gbits/sec                  receiver`  
+
+Исходная пропускная способность составляет **2.39 Gbits/sec.**  
+
+Добавим со стороны клиента искусственную потерю пакетов:    
+`tc qdisc add dev enp0s3 root netem loss 1%`    
+  
+Повторим замер:   
+iperf3 -c 10.0.0.49  
+`Connecting to host 10.0.0.49, port 5201`  
+`[  5] local 10.0.0.41 port 58580 connected to 10.0.0.49 port 5201`  
+`[ ID] Interval           Transfer     Bitrate         Retr  Cwnd`  
+`[  5]   0.00-1.00   sec   205 MBytes  1.72 Gbits/sec  1820   49.9 KBytes`  
+`[  5]   1.00-2.00   sec   235 MBytes  1.97 Gbits/sec  1799   44.2 KBytes`  
+`[  5]   2.00-3.00   sec   239 MBytes  2.01 Gbits/sec  1844   88.4 KBytes`  
+`[  5]   3.00-4.00   sec   236 MBytes  1.98 Gbits/sec  1837   62.7 KBytes`  
+`[  5]   4.00-5.00   sec   238 MBytes  2.00 Gbits/sec  1770   74.1 KBytes`  
+`[  5]   5.00-6.00   sec   234 MBytes  1.96 Gbits/sec  1622   38.5 KBytes`  
+`[  5]   6.00-7.00   sec   242 MBytes  2.03 Gbits/sec  1889   48.5 KBytes`  
+`[  5]   7.00-8.00   sec   240 MBytes  2.01 Gbits/sec  1813   38.5 KBytes`  
+`[  5]   8.00-9.00   sec   228 MBytes  1.91 Gbits/sec  1887   58.5 KBytes`  
+`[  5]   9.00-10.00  sec   229 MBytes  1.92 Gbits/sec  1963   44.2 KBytes`  
+`- - - - - - - - - - - - - - - - - - - - - - - - -`  
+`[ ID] Interval           Transfer     Bitrate         Retr`  
+`[  5]   0.00-10.00  sec  2.27 GBytes  1.95 Gbits/sec  18244             sender`  
+`[  5]   0.00-10.00  sec  2.27 GBytes  1.95 Gbits/sec                  receiver`  
+
+**Итого: скорость была 2.39 Gbits/sec, стала 1.95 Gbits/sec, уменьшилась в 1,22 раза.** 
+
+
 
 ## 3. Какая максимальная реальная скорость передачи данных достижима при линке 100 Мбит/с? Вопрос про TCP payload, то есть цифры, которые вы реально увидите в операционной системе в тестах или в браузере при скачивании файлов. Повлияет ли размер фрейма на это?
 
