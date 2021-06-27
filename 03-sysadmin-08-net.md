@@ -4,7 +4,7 @@
 
 # 2. На лекции мы познакомились отдельно с ipvs и отдельно с keepalived. Воспользовавшись этими знаниями, совместите технологии вместе (VIP должен подниматься демоном keepalived). Приложите конфигурационные файлы, которые у вас получились, и продемонстрируйте работу получившейся конструкции. Используйте для директора отдельный хост, не совмещая его с риалом! Подобная схема возможна, но выходит за рамки рассмотренного на лекции.
 
-## Сетевые настройки:
+## 2.1. Сетевые настройки:   
 
 ### **netology1 (client)**
 
@@ -86,8 +86,8 @@ ip address show
        valid_lft forever preferred_lft forever  
 
 
-## Keepalived
-### **netology2  (ipvsadm master)**
+## 2.2. Настройки keepalived  
+### **netology2  (ipvsadm master)**  
 cat /etc/keepalived/keepalived.conf   
 `vrrp_script chk_nginx {`  
 `    script "systemctl status nginx"`  
@@ -137,7 +137,7 @@ cat /etc/keepalived/keepalived.conf
 `        }`  
 `}`
 
-## Состояние балансировщика  
+## 2.3. Состояние балансировщика  
 ### **netology2  (ipvsadm master)**  
 ipvsadm -Ln  
 `IP Virtual Server version 1.2.1 (size=4096)`  
