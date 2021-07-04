@@ -61,6 +61,84 @@ vault kv get secret/hello
 
 # 3. Используя PKI Secrets Engine, создайте Root CA и Intermediate CA. Обратите внимание на дополнительные материалы по созданию CA в Vault, если с изначальной инструкцией возникнут сложности.  
 
+    tee root-policy.hcl <<EOF
+    # Read system health check
+    path "sys/health"
+    {
+      capabilities = ["read", "sudo"]
+    }
+
+    # Create and manage ACL policies broadly across Vault
+
+    # List existing policies
+    path "sys/policies/acl"
+    {
+      capabilities = ["list"]
+    }
+
+    # Create and manage ACL policies
+    path "sys/policies/acl/*"
+    {
+      capabilities = ["create", "read", "update", "delete", "list", "sudo"]
+    }
+
+    # Enable and manage authentication methods broadly across Vault
+
+    # Manage auth methods broadly across Vault
+    path "auth/*"
+    {
+      capabilities = ["create", "read", "update", "delete", "list", "sudo"]
+    }
+
+    # Create, update, and delete auth methods
+    path "sys/auth/*"
+    {
+      capabilities = ["create", "update", "delete", "sudo"]
+    }
+
+    # List auth methods
+    path "sys/auth"
+    {
+      capabilities = ["read"]
+    }
+
+    # Enable and manage the key/value secrets engine at `secret/` path
+
+    # List, create, update, and delete key/value secrets
+    path "secret/*"
+    {
+      capabilities = ["create", "read", "update", "delete", "list", "sudo"]
+    }
+
+    # Manage secrets engines
+    path "sys/mounts/*" {
+      capabilities = [ "create", "read", "update", "delete", "list" ]
+    }
+
+    # List enabled secrets engine
+    path "sys/mounts" {
+      capabilities = [ "read", "list" ]
+    }
+
+    # Work with pki secrets engine
+    path "pki*" {
+      capabilities = [ "create", "read", "update", "delete", "list", "sudo" ]
+    }
+    EOF
+
+    vault policy write admin admin-policy.hcl
+    vault secrets enable pki
+    vault secrets tune -max-lease-ttl=8760h pki
+    vault write -field=certificate pki/root/generate/internal common_name="example.com" ttl=87600h > CA_cert.crt
+    vault write pki/config/urls issuing_certificates="http://127.0.0.1:8200/v1/pki/ca" crl_distribution_points="http://127.0.0.1:8200/v1/pki/crl"
+    vault write pki/roles/example-dot-com allowed_domains=my-website.com allow_subdomains=true max_ttl=72h
+    vault write pki/config/urls issuing_certificates="$VAULT_ADDR/v1/pki/ca" crl_distribution_points="$VAULT_ADDR/v1/pki/crl"
+    vault secrets enable -path=pki_int pki
+    vault secrets tune -max-lease-ttl=43800h pki_int
+    vault write -format=json pki_int/intermediate/generate/internal common_name="example.com Intermediate Authority" | jq -r '.data.csr' > pki_intermediate.csr
+    vault write -format=json pki/root/sign-intermediate csr=@pki_intermediate.csr format=pem_bundle ttl="43800h" | jq -r '.data.certificate' > intermediate.cert.pem
+    vault write pki_int/intermediate/set-signed certificate=@intermediate.cert.pem
+    vault write pki_int/roles/example-dot-com allowed_domains="example.com" allow_subdomains=true max_ttl="720h"
 
 # 4. Согласно этой же инструкции, подпишите Intermediate CA csr на сертификат для тестового домена (например, netology.example.com если действовали согласно инструкции).  
 
