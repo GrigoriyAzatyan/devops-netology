@@ -250,52 +250,83 @@ apt -y install nginx
 mkdir -p /var/www/netology.example.com/public_html  
 chown -R www-data:www-data /var/www/netology.example.com/public_html
 chmod 755 /var/www  
-tee /var/www/netology.example.com/public_html/index.html <<EOF
-<html>
-  <head>
-    <title>netology.example.com</title>
-  </head>
-  <body>
-    <h1>NETOLOGY!</h1>
-  </body>
-</html>
-EOF
+`tee /var/www/netology.example.com/public_html/index.html <<EOF`  
+`<html>`  
+  `<head>`  
+    `<title>netology.example.com</title>`  
+  `</head>`  
+  `<body>`  
+    `<h1>NETOLOGY!</h1>`  
+  `</body>`  
+`</html>`  
+`EOF`  
 
 cp /etc/nginx/sites-available/default /etc/nginx/sites-available/netology.example.com
 nano /etc/nginx/sites-available/netology.example.com
 
-server {
-        listen 443 ssl;
-        root /var/www/netology.example.com/public_html;
-        index index.html index.htm;
-        server_name netology.example.com;
-        ssl_certificate     /etc/nginx/ssl/netology.example.com.crt;
-        ssl_certificate_key /etc/nginx/ssl/netology.example.com.key;
-}
-ln -s /etc/nginx/sites-available/netology.example.com /etc/nginx/sites-enabled/netology.example.com  
-
-mkdir /etc/nginx/ssl
-**nano /etc/nginx/ssl/netology.example.com.crt**   
-
-
-
-
-
-
+`server {`    
+        `listen 443 ssl;`    
+        `root /var/www/netology.example.com/public_html;`    
+        `index index.html index.htm;`    
+        `server_name netology.example.com; `   
+        `ssl_certificate     /etc/nginx/ssl/netology.example.com.crt;`    
+        `ssl_certificate_key /etc/nginx/ssl/netology.example.com.key;`    
+`}`     
  
-
-
+ln -s /etc/nginx/sites-available/netology.example.com /etc/nginx/sites-enabled/netology.example.com   
+mkdir /etc/nginx/ssl  
+** В /etc/nginx/ssl/netology.example.com.crt подсунул цепочку сертификатов. Сертификат узла пришлось поместить первым, иначе nginx отваливался. **  
+systemctl restart nginx 
 
 
 # 6. Модифицировав /etc/hosts и системный trust-store, добейтесь безошибочной с точки зрения HTTPS работы curl на ваш тестовый домен (отдающийся с localhost). Рекомендуется добавлять в доверенные сертификаты Intermediate CA. Root CA добавить было бы правильнее, но тогда при конфигурации nginx потребуется включить в цепочку Intermediate, что выходит за рамки лекции. Так же, пожалуйста, не добавляйте в доверенные сам сертификат хоста.  
 
-cat /etc/hosts  
+nano /etc/hosts  
 127.0.0.1       localhost       netology.example.com  
 127.0.1.1       vagrant.vm      vagrant  
 
+**nano /etc/nginx/ssl/ca.crt**  
+Подсовываем сюда промежуточный сертификат:  
+-----BEGIN CERTIFICATE-----
+MIIDpjCCAo6gAwIBAgIUeQ1cv6zc+7m6ZAR+o1POEqOgNn0wDQYJKoZIhvcNAQEL
+BQAwFjEUMBIGA1UEAxMLZXhhbXBsZS5jb20wHhcNMjEwNzA0MTYxOTQ0WhcNMjIw
+NzA0MTYyMDE0WjAtMSswKQYDVQQDEyJleGFtcGxlLmNvbSBJbnRlcm1lZGlhdGUg
+QXV0aG9yaXR5MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAoSXTholz
+ZDiQ0CRMvbk6tUzo+tK21Zhwe5uBSuS5lgGiJL5Hvl/44nlDlEs+NZABB04czEgs
+tmdjFbK0yaz5C1hpMmaUZz9lIwl55/Rz6FPbyYZfucVEmSkCMxYqrPs5pTB4BN96
+6ZFEN6VzRQzxTyxW5Qz1JCwMMgaNcKzl2X4RIhnMuaPlyuNbw1uc1XdIiEXohPjR
+bAQElh3QEtkXWxDWqUAPmRcdpPfImKrIDGHsOK9graw1/PleN9QWZPbHbc2hgZNF
+0YdrYw20SOC2n3iMmRhmFOP9UWEn4++h+5XZNpJfTaB1ynIIEYcvJyJ85StPcICl
+Q9Pd2/r4/7K11wIDAQABo4HUMIHRMA4GA1UdDwEB/wQEAwIBBjAPBgNVHRMBAf8E
+BTADAQH/MB0GA1UdDgQWBBStM36C8WRDYjNZNIAliV+D8btiODAfBgNVHSMEGDAW
+gBQ/wchl1FnMBbv+WYLHt0v77TKzxzA7BggrBgEFBQcBAQQvMC0wKwYIKwYBBQUH
+MAKGH2h0dHA6Ly8xMjcuMC4wLjE6ODIwMC92MS9wa2kvY2EwMQYDVR0fBCowKDAm
+oCSgIoYgaHR0cDovLzEyNy4wLjAuMTo4MjAwL3YxL3BraS9jcmwwDQYJKoZIhvcN
+AQELBQADggEBAEcJhKBiXvpgeJ54e7cZUZy47AWvWJIcz3CVVG8pkjXSpXfOtwu7
+jyIDBsxXRH9s9CfHbm5edl5ejPfGiJKU3L9ipkzb56Q3QcjXIBqj9vk3hvspY+Ri
+8paJeyK5YvgPOes6n6LZ2zEqN3trJCurL1wqqtOORgX4qfUqaQTsaT2smaHcqduS
+Pne7FtTrvvKCkC4zuj11jRrKyHSIh9/d9vBJZNsdeqf9+Uuqii+xgJixKWnlIjMz
+4zv+ZdAOfuANic/65U7WiLT8V3JrA5QBsIciRWNGiVM1R7oFKlN4KU171ecFJSl3
+R3AX7efyYNE8H2EPra+EyUsosLDY7AbweGQ=
+-----END CERTIFICATE-----
+
+ln -s /etc/nginx/ssl/ca.crt /usr/local/share/ca-certificates/example-ca.crt
+update-ca-certificates
+
+
+Результат в виртуальной машине:  
+![Результат](https://s72vla.storage.yandex.net/rdisk/053a70724cfbb8ace6041e508156255609a371d1b2f7cade3fc7972eb99425ea/60e37db7/JMeYnk0Z_KW3CXVEKh7m3m9-I5wK7kvM-MyEb_VVSVV69p7TWQXQCyIGjlx9DI66B7LVZWkeRM6YqzDjD9s_wQ==?uid=0&filename=ssl_nginx_1.jpg&disposition=inline&hash=&limit=0&content_type=image%2Fjpeg&owner_uid=0&fsize=62712&hid=2c09ee84518f465e9f7feb1a5c4c0aea&media_type=image&tknv=v2&etag=5155f70ef63fe462459de910e6623dd3&rtoken=fdkDlnsRaXDz&force_default=no&ycrid=na-bf92d9260c9cb59152a6e6120c43bcd7-downloader11e&ts=5c6673d019bc0&s=505dfe3e53e78810950ea8763175fbab98d6029a35f12f49dee8acb4c1bc21b7&pb=U2FsdGVkX18Vmp8kGTwr8ZtMV1eX4Lo4GrE_jbo8mmD0YPFXWvhMJdbvRu2HcxvUtfly9OqdXHGnkjA0MlL0lTLtB8Ia55u7E2rLmSDS2i8)
+
+Результат на хосте:  
+![Результат](https://s602sas.storage.yandex.net/rdisk/9fd930882c243ff0ef7f086adb061822ceff1f20f473944f62f644c61e842551/60e37a8f/JMeYnk0Z_KW3CXVEKh7m3mt9C7n_QbDsujeXYOP0fktD26DJ-KVojpbmx51Zyo0lK7nzuxrApcuKQzqyl2C-Jg==?uid=0&filename=ssl_nginx.jpg&disposition=inline&hash=&limit=0&content_type=image%2Fjpeg&owner_uid=0&fsize=93783&hid=399daceed490f5e37f0d80c9e95a14b4&media_type=image&tknv=v2&etag=8dd5dc76e68b637b813783495af8eab3&rtoken=CFjVqYEZbsvc&force_default=no&ycrid=na-70fcfbc52fb06eecfa8cbceb6c613ec3-downloader22e&ts=5c6670cd881c0&s=74d2a6ce96010f9d87ab1b8258ac304b1f043ebc496bcc164911584e424c9807&pb=U2FsdGVkX1-ng4KBOqcE5pAnpbzLcb8b6acQMLOEx4R6y6iDP9c7QvlADSRW8eHqLOcT_ZOWc6ysSh-UKW78J8Fzq7hKTT-eYpTqHICcvWU)
 
 
 # 7. Ознакомьтесь с протоколом ACME и CA Let's encrypt. Если у вас есть во владении доменное имя с платным TLS-сертификатом, который возможно заменить на LE, или же без HTTPS вообще, попробуйте воспользоваться одним из предложенных клиентов, чтобы сделать веб-сайт безопасным (или перестать платить за коммерческий сертификат).  
 
+Протокол ACME применяется для организации взаимодействия удостоверяющего центра и web-сервера, например, для автоматизации получения и обслуживания сертификатов. Запросы передаются в формате JSON поверх HTTPS.  
+Проект разработан некоммерческим удостоверяющим центром Let’s Encrypt, контролируемым сообществом и предоставляющим сертификаты безвозмездно всем желающим.  
+
+Получить сертификат Let’s Encrypt на локальную виртуальную машину не представилось возможным, т.к. для этого нужен публичный доступ по 80 порту, зарегистрированное публичное доменое имя и соответствующая DNS-запись.  
+Инструкция по настройке Certbot на Ubuntu 20: https://certbot.eff.org/lets-encrypt/ubuntufocal-nginx
 
 # Дополнительное задание вне зачета. Вместо ручного подкладывания сертификата в nginx, воспользуйтесь consul-template для автоматического подтягивания сертификата из Vault.  
