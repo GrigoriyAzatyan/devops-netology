@@ -144,9 +144,9 @@ vault kv get secret/hello
 
 `vault write pki_int/issue/example-dot-com common_name="netology.example.com" ttl="720h"`  
 
-Key                 Value
----                 -----
-ca_chain            [-----BEGIN CERTIFICATE-----
+Key                 Value  
+---                 -----  
+ca_chain            [-----BEGIN CERTIFICATE-----  
 MIIDpjCCAo6gAwIBAgIUeQ1cv6zc+7m6ZAR+o1POEqOgNn0wDQYJKoZIhvcNAQEL
 BQAwFjEUMBIGA1UEAxMLZXhhbXBsZS5jb20wHhcNMjEwNzA0MTYxOTQ0WhcNMjIw
 NzA0MTYyMDE0WjAtMSswKQYDVQQDEyJleGFtcGxlLmNvbSBJbnRlcm1lZGlhdGUg
@@ -166,9 +166,9 @@ jyIDBsxXRH9s9CfHbm5edl5ejPfGiJKU3L9ipkzb56Q3QcjXIBqj9vk3hvspY+Ri
 8paJeyK5YvgPOes6n6LZ2zEqN3trJCurL1wqqtOORgX4qfUqaQTsaT2smaHcqduS
 Pne7FtTrvvKCkC4zuj11jRrKyHSIh9/d9vBJZNsdeqf9+Uuqii+xgJixKWnlIjMz
 4zv+ZdAOfuANic/65U7WiLT8V3JrA5QBsIciRWNGiVM1R7oFKlN4KU171ecFJSl3
-R3AX7efyYNE8H2EPra+EyUsosLDY7AbweGQ=
------END CERTIFICATE-----]
-certificate         -----BEGIN CERTIFICATE-----
+R3AX7efyYNE8H2EPra+EyUsosLDY7AbweGQ=    
+-----END CERTIFICATE-----]  
+certificate         -----BEGIN CERTIFICATE-----  
 MIIDbjCCAlagAwIBAgIUeyM9lME43T988OUk4tyy4qIDPL8wDQYJKoZIhvcNAQEL
 BQAwLTErMCkGA1UEAxMiZXhhbXBsZS5jb20gSW50ZXJtZWRpYXRlIEF1dGhvcml0
 eTAeFw0yMTA3MDQxNjMxMzhaFw0yMTA4MDMxNjMyMDhaMB8xHTAbBgNVBAMTFG5l
@@ -187,10 +187,10 @@ m36zuTUF4QtHV6mNAv90Bnba6/N6gu7VaUjVs1j1UmFR2TfbWfyDWijCfjvMekNC
 atvTRYun4rjunNq62LFIcW/2+tArOa3CWwOLS9DO71K2oXSCDn7Yq7TmdX4h3Qr4
 g8FzGtwEV2lfXJ3/8hc+fd+Vwk9tCI66it/AqW2Yfqk/GRG0PAQ9Ty+KljXzia53
 FSATC4LVpIqb1JMxzqhyMJ6fSwCgtZGVgfTK1+5naTijxNiiMlb/HqjUzMzQBHNz
-Uf7Gd90uoSaV9Tvy3Jt6mXAH
------END CERTIFICATE-----
-expiration          1628008328
-issuing_ca          -----BEGIN CERTIFICATE-----
+Uf7Gd90uoSaV9Tvy3Jt6mXAH  
+-----END CERTIFICATE-----    
+expiration          1628008328  
+issuing_ca          -----BEGIN CERTIFICATE-----    
 MIIDpjCCAo6gAwIBAgIUeQ1cv6zc+7m6ZAR+o1POEqOgNn0wDQYJKoZIhvcNAQEL
 BQAwFjEUMBIGA1UEAxMLZXhhbXBsZS5jb20wHhcNMjEwNzA0MTYxOTQ0WhcNMjIw
 NzA0MTYyMDE0WjAtMSswKQYDVQQDEyJleGFtcGxlLmNvbSBJbnRlcm1lZGlhdGUg
@@ -210,9 +210,9 @@ jyIDBsxXRH9s9CfHbm5edl5ejPfGiJKU3L9ipkzb56Q3QcjXIBqj9vk3hvspY+Ri
 8paJeyK5YvgPOes6n6LZ2zEqN3trJCurL1wqqtOORgX4qfUqaQTsaT2smaHcqduS
 Pne7FtTrvvKCkC4zuj11jRrKyHSIh9/d9vBJZNsdeqf9+Uuqii+xgJixKWnlIjMz
 4zv+ZdAOfuANic/65U7WiLT8V3JrA5QBsIciRWNGiVM1R7oFKlN4KU171ecFJSl3
-R3AX7efyYNE8H2EPra+EyUsosLDY7AbweGQ=
------END CERTIFICATE-----
-private_key         -----BEGIN RSA PRIVATE KEY-----
+R3AX7efyYNE8H2EPra+EyUsosLDY7AbweGQ=  
+-----END CERTIFICATE-----   
+private_key         -----BEGIN RSA PRIVATE KEY-----    
 MIIEpAIBAAKCAQEA3wMNhp7Yl1LwOu9sD7Q9xhs/ugAbAbCQ0ZBIvMGjgMklggwv
 me0C0oQ6+f4fmX6/yW0PVrsGVZU9g5HL+guFgamF7UN1/6xtW2WXmcw9Ah/WiJx9
 zfRsjKpfTxukrKRrucImcPbW5fYJ5NKGq41m1igM13NJFECrqUDtTFR+cdkQapDW
@@ -237,17 +237,62 @@ a2I+B7gHKyqp3HJIQN0Is3eiD4x62V9ydLQZJfsbKxsP2F2+DqD36cNjszzYYr14
 WPSlIrPt1E0YZHTg5fG9/PQODFoJViSnpBURHlYmcSHhj/DO4c3VFyQmQM1O3jqu
 hAM7CQKBgQDtDdA8/mrS3CgcZuzcYOltVkJ/e6ZPpbwEIV+AIMGsulFyZurvQJd+
 1jpPJrROnx/6vk4WCbOBfLvf8s2XpqFSIbJLEZouM2B/iL1aXYXei5iQ5kI9DkRo
-daVWX0xxZ7XtHfrdB/7NLDhz/MgBULeqysw/nY3SrRjXDIQdCBfnfA==
------END RSA PRIVATE KEY-----
-private_key_type    rsa
-serial_number       7b:23:3d:94:c1:38:dd:3f:7c:f0:e5:24:e2:dc:b2:e2:a2:03:3c:bf
+daVWX0xxZ7XtHfrdB/7NLDhz/MgBULeqysw/nY3SrRjXDIQdCBfnfA==  
+-----END RSA PRIVATE KEY-----  
+private_key_type    rsa  
+serial_number       7b:23:3d:94:c1:38:dd:3f:7c:f0:e5:24:e2:dc:b2:e2:a2:03:3c:bf  
 
 
 
 # 5. Поднимите на localhost nginx, сконфигурируйте default vhost для использования подписанного Vault Intermediate CA сертификата и выбранного вами домена. Сертификат из Vault подложить в nginx руками.  
 
+apt -y install nginx  
+mkdir -p /var/www/netology.example.com/public_html  
+chown -R www-data:www-data /var/www/netology.example.com/public_html
+chmod 755 /var/www  
+tee /var/www/netology.example.com/public_html/index.html <<EOF
+<html>
+  <head>
+    <title>netology.example.com</title>
+  </head>
+  <body>
+    <h1>NETOLOGY!</h1>
+  </body>
+</html>
+EOF
+
+cp /etc/nginx/sites-available/default /etc/nginx/sites-available/netology.example.com
+nano /etc/nginx/sites-available/netology.example.com
+
+server {
+        listen 443 ssl;
+        root /var/www/netology.example.com/public_html;
+        index index.html index.htm;
+        server_name netology.example.com;
+        ssl_certificate     /etc/nginx/ssl/netology.example.com.crt;
+        ssl_certificate_key /etc/nginx/ssl/netology.example.com.key;
+}
+ln -s /etc/nginx/sites-available/netology.example.com /etc/nginx/sites-enabled/netology.example.com  
+
+mkdir /etc/nginx/ssl
+**nano /etc/nginx/ssl/netology.example.com.crt**   
+
+
+
+
+
+
+ 
+
+
+
 
 # 6. Модифицировав /etc/hosts и системный trust-store, добейтесь безошибочной с точки зрения HTTPS работы curl на ваш тестовый домен (отдающийся с localhost). Рекомендуется добавлять в доверенные сертификаты Intermediate CA. Root CA добавить было бы правильнее, но тогда при конфигурации nginx потребуется включить в цепочку Intermediate, что выходит за рамки лекции. Так же, пожалуйста, не добавляйте в доверенные сам сертификат хоста.  
+
+cat /etc/hosts  
+127.0.0.1       localhost       netology.example.com  
+127.0.1.1       vagrant.vm      vagrant  
+
 
 
 # 7. Ознакомьтесь с протоколом ACME и CA Let's encrypt. Если у вас есть во владении доменное имя с платным TLS-сертификатом, который возможно заменить на LE, или же без HTTPS вообще, попробуйте воспользоваться одним из предложенных клиентов, чтобы сделать веб-сайт безопасным (или перестать платить за коммерческий сертификат).  
