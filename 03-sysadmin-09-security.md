@@ -315,10 +315,10 @@ update-ca-certificates
 
 
 Результат в виртуальной машине:  
-![Результат](https://s72vla.storage.yandex.net/rdisk/053a70724cfbb8ace6041e508156255609a371d1b2f7cade3fc7972eb99425ea/60e37db7/JMeYnk0Z_KW3CXVEKh7m3m9-I5wK7kvM-MyEb_VVSVV69p7TWQXQCyIGjlx9DI66B7LVZWkeRM6YqzDjD9s_wQ==?uid=0&filename=ssl_nginx_1.jpg&disposition=inline&hash=&limit=0&content_type=image%2Fjpeg&owner_uid=0&fsize=62712&hid=2c09ee84518f465e9f7feb1a5c4c0aea&media_type=image&tknv=v2&etag=5155f70ef63fe462459de910e6623dd3&rtoken=fdkDlnsRaXDz&force_default=no&ycrid=na-bf92d9260c9cb59152a6e6120c43bcd7-downloader11e&ts=5c6673d019bc0&s=505dfe3e53e78810950ea8763175fbab98d6029a35f12f49dee8acb4c1bc21b7&pb=U2FsdGVkX18Vmp8kGTwr8ZtMV1eX4Lo4GrE_jbo8mmD0YPFXWvhMJdbvRu2HcxvUtfly9OqdXHGnkjA0MlL0lTLtB8Ia55u7E2rLmSDS2i8)
+![Результат в виртуальной машине](https://github.com/GrigoriyAzatyan/devops-netology/blob/main/ssl_nginx_1.jpg)
 
 Результат на хосте:  
-![Результат](https://s602sas.storage.yandex.net/rdisk/9fd930882c243ff0ef7f086adb061822ceff1f20f473944f62f644c61e842551/60e37a8f/JMeYnk0Z_KW3CXVEKh7m3mt9C7n_QbDsujeXYOP0fktD26DJ-KVojpbmx51Zyo0lK7nzuxrApcuKQzqyl2C-Jg==?uid=0&filename=ssl_nginx.jpg&disposition=inline&hash=&limit=0&content_type=image%2Fjpeg&owner_uid=0&fsize=93783&hid=399daceed490f5e37f0d80c9e95a14b4&media_type=image&tknv=v2&etag=8dd5dc76e68b637b813783495af8eab3&rtoken=CFjVqYEZbsvc&force_default=no&ycrid=na-70fcfbc52fb06eecfa8cbceb6c613ec3-downloader22e&ts=5c6670cd881c0&s=74d2a6ce96010f9d87ab1b8258ac304b1f043ebc496bcc164911584e424c9807&pb=U2FsdGVkX1-ng4KBOqcE5pAnpbzLcb8b6acQMLOEx4R6y6iDP9c7QvlADSRW8eHqLOcT_ZOWc6ysSh-UKW78J8Fzq7hKTT-eYpTqHICcvWU)
+![Результат на хосте](https://github.com/GrigoriyAzatyan/devops-netology/blob/main/ssl_nginx.jpg)
 
 
 # 7. Ознакомьтесь с протоколом ACME и CA Let's encrypt. Если у вас есть во владении доменное имя с платным TLS-сертификатом, который возможно заменить на LE, или же без HTTPS вообще, попробуйте воспользоваться одним из предложенных клиентов, чтобы сделать веб-сайт безопасным (или перестать платить за коммерческий сертификат).  
