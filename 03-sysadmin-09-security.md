@@ -57,7 +57,7 @@ vault kv get secret/hello
 
 
 # 2. Запустить Vault-сервер в dev-режиме (дополнив ключ -dev упомянутым выше -dev-listen-address, если хотите увидеть UI).  
-![Скриншот](https://s722sas.storage.yandex.net/rdisk/ddc91a9fccb8c696db882ba5b9bcf7075736e009f4dd50fed8b524f34bed8334/60e20cdd/JMeYnk0Z_KW3CXVEKh7m3hZCSTgEymCHOk44VKkzgN04lprVc4enSFeC68GpymOowc4MAZCi9EnYx_07qAzxxg==?uid=0&filename=vault.jpg&disposition=inline&hash=&limit=0&content_type=image%2Fjpeg&owner_uid=0&fsize=148130&hid=33a2ed7594be58d8d0b62e94a179340a&media_type=image&tknv=v2&etag=1a9b424ac9c8fb58388fcc1fe3f43ebf&rtoken=fOmKJEtpIO2g&force_default=no&ycrid=na-97af86d8b0cecf6049ea31ec3a1ae739-downloader22f&ts=5c65140c73140&s=708f30dee7c760944d873c120a0dcfa7d3a37cdcf7bf5f2f8f8e6a2b5462fd70&pb=U2FsdGVkX1816nA9iofDRBteZ0oZuu3oTAWwXvQjGQ4GFSfvKamAE7SFF3r5HQrBemuUWK-YfU4ZxpRZazWqzopDASwLJtsJRQVu7DXOFy0)
+![Скриншот](https://github.com/GrigoriyAzatyan/devops-netology/blob/main/vault.jpg)
 
 # 3. Используя PKI Secrets Engine, создайте Root CA и Intermediate CA. Обратите внимание на дополнительные материалы по созданию CA в Vault, если с изначальной инструкцией возникнут сложности.  
 
