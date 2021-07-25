@@ -74,27 +74,30 @@
                 print(prepare_result)
         print()
 
-## Пример работы:  
+## Пример работы 
+* Проверяем руками:  
 
-    grigorii_azatyan@ubuntu-20:~/temp$ git status
-    На ветке master
-    ...
-    Изменения, которые не в индексе для коммита:
-      (используйте «git add <файл>…», чтобы добавить файл в индекс)
-      (use "git restore <file>..." to discard changes in working directory)
-            изменено:      date
-            изменено:      ls
+        grigorii_azatyan@ubuntu-20:~/temp$ git status
+        На ветке master
+        ...
+        Изменения, которые не в индексе для коммита:
+          (используйте «git add <файл>…», чтобы добавить файл в индекс)
+          (use "git restore <file>..." to discard changes in working directory)
+                изменено:      date
+                изменено:      ls
 
-    grigorii_azatyan@ubuntu-20:~/temp$ ~/git/devops_netology/script.py --path=`pwd`
+* Запускаем скрипт:  
 
-    **************************************************************************
-    *** Проверяем папку /home/grigorii_azatyan/temp на наличие измененных файлов ***
-    **************************************************************************
+        grigorii_azatyan@ubuntu-20:~/temp$ ~/git/devops_netology/script.py --path=`pwd`
 
-    Найдены следующие измененные файлы:
+        **************************************************************************
+        *** Проверяем папку /home/grigorii_azatyan/temp на наличие измененных файлов ***
+        **************************************************************************
 
-    /home/grigorii_azatyan/temp/date
-    /home/grigorii_azatyan/temp/ls
+        Найдены следующие измененные файлы:
+
+        /home/grigorii_azatyan/temp/date
+        /home/grigorii_azatyan/temp/ls
 
  
 
