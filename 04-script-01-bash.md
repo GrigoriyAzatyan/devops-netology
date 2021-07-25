@@ -17,15 +17,15 @@
 **Ответ**  
 * Перезаписываем лог:
 
-    while ((1==1))
-    do
-    curl https://localhost:4757
-    if (($? != 0))
-    then
-    date > curl.log
-    break
-    fi
-    done
+        while ((1==1))
+        do
+        curl https://localhost:4757
+        if (($? != 0))
+        then
+        date > curl.log
+        break
+        fi
+        done
 
 - Запись в лог заменена перезаписью.
 - Добавлена пропущенная скобка в строке 1;  
