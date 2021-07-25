@@ -76,6 +76,15 @@
 
 ## Пример работы:  
 
+    grigorii_azatyan@ubuntu-20:~/temp$ git status
+    На ветке master
+    ...
+    Изменения, которые не в индексе для коммита:
+      (используйте «git add <файл>…», чтобы добавить файл в индекс)
+      (use "git restore <file>..." to discard changes in working directory)
+            изменено:      date
+            изменено:      ls
+
     grigorii_azatyan@ubuntu-20:~/temp$ ~/git/devops_netology/script.py --path=`pwd`
 
     **************************************************************************
@@ -87,9 +96,7 @@
     /home/grigorii_azatyan/temp/date
     /home/grigorii_azatyan/temp/ls
 
-    grigorii_azatyan@ubuntu-20:~/temp$ cd ~/git/devops_netology/
-    grigorii_azatyan@ubuntu-20:~/git/devops_netology$ nano script.py
-    grigorii_azatyan@ubuntu-20:~/git/devops_netology$
+ 
 
 
 
