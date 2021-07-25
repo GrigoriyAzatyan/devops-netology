@@ -40,7 +40,7 @@
     import argparse
     import os
 
-    # Принимаем путь крепозиторию в параметр --path
+    # Принимаем путь к репозиторию в параметр --path
     parser = argparse.ArgumentParser()
     parser.add_argument('--path', type=str, default='~/git/devops_netology', help='Укажите путь к репозиторию')
     arg = parser.parse_args()
