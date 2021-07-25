@@ -74,6 +74,25 @@
                 print(prepare_result)
         print()
 
+## Пример работы:  
+
+    grigorii_azatyan@ubuntu-20:~/temp$ ~/git/devops_netology/script.py --path=`pwd`
+
+    **************************************************************************
+    *** Проверяем папку /home/grigorii_azatyan/temp на наличие измененных файлов ***
+    **************************************************************************
+
+    Найдены следующие измененные файлы:
+
+    /home/grigorii_azatyan/temp/date
+    /home/grigorii_azatyan/temp/ls
+
+    grigorii_azatyan@ubuntu-20:~/temp$ cd ~/git/devops_netology/
+    grigorii_azatyan@ubuntu-20:~/git/devops_netology$ nano script.py
+    grigorii_azatyan@ubuntu-20:~/git/devops_netology$
+
+
+
 
 
 # Задание 3
