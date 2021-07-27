@@ -115,7 +115,7 @@
     file_log = open('hosts.log', 'a+')
     file_log.close()
 
-    # Просмотрим содержимое лога
+    # Просмотрим содержимое предыдущего лога
     file_log = open('hosts.log', 'r')
     log_text = file_log.read()
     if len(log_text) != 0:
