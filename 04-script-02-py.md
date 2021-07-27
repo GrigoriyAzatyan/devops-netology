@@ -122,12 +122,11 @@
        log_dict = ast.literal_eval(log_text)
        file_log.close()
     else:
-       # Если предыдущего лога нет, заполним словарь нулями
+       # Если словаря нет, создадим и заполним
        log_dict = {}
        n = 0
        while n <= (len(nodes) - 1):
           log_dict[nodes[n]] = socket.gethostbyname(nodes[n])
-          log_dict[nodes[n]] = "0.0.0.0"
           n += 1
 
     # Просмотрим новые данные, запишем в лог
@@ -143,8 +142,6 @@
        n += 1
     log.write(str(new_log_dict))
     log.close()
-
-
 
 
 # Дополнительное задание (со звездочкой*) - необязательно к выполнению  
