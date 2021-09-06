@@ -21,7 +21,7 @@
 
 ## Задача 2 
 
-docker pull gregory78/netology:latest  
+docker pull gregory78/netology:latest 
 https://hub.docker.com/repository/docker/gregory78/netology  
 
 ## Задача 3 
@@ -34,8 +34,23 @@ https://hub.docker.com/repository/docker/gregory78/netology
 
 ---
 
-### Как cдавать задание
+### Что сделано:  
 
-Выполненное домашнее задание пришлите ссылкой на .md-файл в вашем репозитории.
-
----
+    docker pull centos:latest  
+    docker run --name centos -v /docker/info:/share/info -td 300e315adb2f  
+    
+    docker pull debian:latest  
+    docker run --name debian -v /docker/info:/info -td 82bd5ee7b1c5
+    
+    docker exec -it centos bash
+    echo `cat /etc/redhat-release` > /share/info/from_centos.txt  
+    exit  
+    
+    echo `hostnamectl` > /docker/info/from_host.txt  
+    
+    docker exec -it debian bash  
+    ls -l /info
+    
+    total 8  
+    -rw-r--r-- 1 root root 262 Sep  6 18:46 from_host.txt  
+    -rw-r--r-- 1 root root  30 Sep  6 18:45 from_centos.txt 
