@@ -21,7 +21,7 @@
 
 ## Задача 2 
 
-docker pull gregory78/netology:latest 
+docker pull gregory78/netology:latest    
 https://hub.docker.com/repository/docker/gregory78/netology  
 
 ## Задача 3 
