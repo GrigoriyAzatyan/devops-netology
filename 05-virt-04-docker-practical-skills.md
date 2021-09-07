@@ -37,11 +37,31 @@ CMD ["Hey, netology”]
 
 В данной задаче вы составите несколько разных Dockerfile для проекта Jenkins, опубликуем образ в `dockerhub.io` и посмотрим логи этих контейнеров.
 
-- Составьте 2 Dockerfile:
+### Образ 2
+* **Dockerfile**  
+```
+    FROM ubuntu:focal-20210827  
+    ENV TZ=Asia/Yekaterinburg  
+    RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone  
+    RUN apt-get -y update && \  
+    apt -y install default-jre && \  
+    apt -y install default-jdk && \  
+    apt-get -y install wget gnupg2 tini && \  
+    wget -q -O - https://pkg.jenkins.io/debian-stable/jenkins.io.key | apt-key add - && \  
+    sh -c 'echo deb https://pkg.jenkins.io/debian-stable binary/ > /etc/apt/sources.list.d/jenkins.list' && \  
+    apt-get -y update && \  
+    apt-get -y install jenkins  
+    EXPOSE 8080  
+    EXPOSE 50000  
+    ENTRYPOINT /bin/sh -c 'service jenkins start' && /bin/sh  
+```
+* Ссылка на Dockerhub: https://hub.docker.com/layers/166118965/gregory78/jenkins_ubuntu/ver2/images/sha256-516cb567a9bdf9fd91ef7d07df07fc9f65feddab8e3fb98d8b3be8a443c982ad?context=repo
 
-    - Общие моменты:
-        - Образ должен запускать [Jenkins server](https://www.jenkins.io/download/)
-        
+### Скриншот
+![Jenkins](https://github.com/GrigoriyAzatyan/devops-netology/blob/main/Jenkins.jpg)
+
+
+       
     - Спецификация первого образа:
         - Базовый образ - [amazoncorreto](https://hub.docker.com/_/amazoncorretto)
         - Присвоить образу тэг `ver1` 
