@@ -1,4 +1,4 @@
-## Задача 1 
+# Задача 1 
 
 Измените базовый образ предложенного Dockerfile на Arch Linux c сохранением его функциональности.
 
@@ -26,6 +26,7 @@ CMD ["Hey, netology”]
 ```
 
 - Скриншот вывода командной строки после запуска контейнера из вашего базового образа
+
 ![pony](https://github.com/GrigoriyAzatyan/devops-netology/blob/main/pony.jpg)
 
 - **Ссылка на образ в хранилище docker-hub**: 
@@ -33,12 +34,12 @@ CMD ["Hey, netology”]
   - docker pull gregory78/pony_archlinux:latest
 
 
-## Задача 2 
+# Задача 2 
 
 В данной задаче вы составите несколько разных Dockerfile для проекта Jenkins, опубликуем образ в `dockerhub.io` и посмотрим логи этих контейнеров.
 
-### Образ 2
-* **Dockerfile**  
+## Образ 2
+### Dockerfile
 ```
     FROM ubuntu:focal-20210827  
     ENV TZ=Asia/Yekaterinburg  
@@ -55,11 +56,14 @@ CMD ["Hey, netology”]
     EXPOSE 50000  
     ENTRYPOINT /bin/sh -c 'service jenkins start' && /bin/sh  
 ```
-* Ссылка на Dockerhub: https://hub.docker.com/layers/166118965/gregory78/jenkins_ubuntu/ver2/images/sha256-516cb567a9bdf9fd91ef7d07df07fc9f65feddab8e3fb98d8b3be8a443c982ad?context=repo
-
-### Скриншот
+### Скриншот работы Jenkins  
 ![Jenkins](https://github.com/GrigoriyAzatyan/devops-netology/blob/main/Jenkins.jpg)
 
+### Скриншот логов контейнера  
+![logs_ver2](https://github.com/GrigoriyAzatyan/devops-netology/blob/main/ver2_logs.jpg)
+
+### Ссылка на Dockerhub   
+https://hub.docker.com/layers/166118965/gregory78/jenkins_ubuntu/ver2/images/sha256-516cb567a9bdf9fd91ef7d07df07fc9f65feddab8e3fb98d8b3be8a443c982ad?context=repo
 
        
     - Спецификация первого образа:
