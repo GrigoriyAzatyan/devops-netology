@@ -37,6 +37,24 @@ CMD ["Hey, netology”]
 # Задача 2 
 
 В данной задаче вы составите несколько разных Dockerfile для проекта Jenkins, опубликуем образ в `dockerhub.io` и посмотрим логи этих контейнеров.
+## Образ 1
+### Dockerfile
+```
+FROM amazoncorretto:latest  
+RUN yum -y install wget && \  
+cd /tmp; wget https://get.jenkins.io/war-stable/2.303.1/jenkins.war && \  
+chmod 666 jenkins.war  
+EXPOSE 8080  
+EXPOSE 50000  
+ENTRYPOINT java -jar /tmp/jenkins.war && /bin/sh     
+```
+
+### Скриншот логов контейнера  
+![logs_ver1](https://github.com/GrigoriyAzatyan/devops-netology/blob/main/ver1_logs.jpg)
+
+### Ссылка на Dockerhub   
+https://hub.docker.com/layers/166131995/gregory78/jenkins_amazon/ver1/images/sha256-ee2779cf620dfb3b569f5e0507b750d89ff3c9fae70f951dff57b63da64c2069?context=repo
+
 
 ## Образ 2
 ### Dockerfile
@@ -65,24 +83,7 @@ CMD ["Hey, netology”]
 ### Ссылка на Dockerhub   
 https://hub.docker.com/layers/166118965/gregory78/jenkins_ubuntu/ver2/images/sha256-516cb567a9bdf9fd91ef7d07df07fc9f65feddab8e3fb98d8b3be8a443c982ad?context=repo
 
-       
-    - Спецификация первого образа:
-        - Базовый образ - [amazoncorreto](https://hub.docker.com/_/amazoncorretto)
-        - Присвоить образу тэг `ver1` 
-    
-    - Спецификация второго образа:
-        - Базовый образ - [ubuntu:latest](https://hub.docker.com/_/ubuntu)
-        - Присвоить образу тэг `ver2` 
 
-- Соберите 2 образа по полученным Dockerfile
-- Запустите и проверьте их работоспособность
-- Опубликуйте образы в своём dockerhub.io хранилище
-
-Для получения зачета, вам необходимо предоставить:
-- Наполнения 2х Dockerfile из задания
-- Скриншоты логов запущенных вами контейнеров (из командной строки)
-- Скриншоты веб-интерфейса Jenkins запущенных вами контейнеров (достаточно 1 скриншота на контейнер)
-- Ссылки на образы в вашем хранилище docker-hub
 
 ## Задача 3 
 
