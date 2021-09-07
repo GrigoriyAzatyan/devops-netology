@@ -1,7 +1,5 @@
 ## Задача 1 
 
-В данном задании вы научитесь изменять существующие Dockerfile, адаптируя их под нужный инфраструктурный стек.
-
 Измените базовый образ предложенного Dockerfile на Arch Linux c сохранением его функциональности.
 
 ```text
@@ -18,10 +16,22 @@ ENTRYPOINT ["/usr/bin/ponysay"]
 CMD ["Hey, netology”]
 ```
 
-Для получения зачета, вам необходимо предоставить:
-- Написанный вами Dockerfile
+### Результат   
+- Написанный вами Dockerfile   
+```
+    FROM archlinux:latest
+    RUN yes | pacman -Suy && yes | pacman -S ponysay
+    ENTRYPOINT ["/usr/bin/ponysay"]
+    CMD ["Hey, netology"]
+```
+
 - Скриншот вывода командной строки после запуска контейнера из вашего базового образа
-- Ссылку на образ в вашем хранилище docker-hub
+![pony](https://github.com/GrigoriyAzatyan/devops-netology/blob/main/pony.jpg)
+
+- **Ссылка на образ в хранилище docker-hub**: 
+  - https://hub.docker.com/repository/docker/gregory78/pony_archlinux/tags?page=1&ordering=last_updated
+  - docker pull gregory78/pony_archlinux:latest
+
 
 ## Задача 2 
 
