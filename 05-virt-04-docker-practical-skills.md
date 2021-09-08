@@ -87,23 +87,21 @@ https://hub.docker.com/layers/166118965/gregory78/jenkins_ubuntu/ver2/images/sha
 
 ## Задача 3 
 
-В данном задании вы научитесь:
-- объединять контейнеры в единую сеть
-- исполнять команды "изнутри" контейнера
-
-Для выполнения задания вам нужно:
-- Написать Dockerfile: 
-    - Использовать образ https://hub.docker.com/_/node как базовый
-    - Установить необходимые зависимые библиотеки для запуска npm приложения https://github.com/simplicitesoftware/nodejs-demo
-    - Выставить у приложения (и контейнера) порт 3000 для прослушки входящих запросов  
-    - Соберите образ и запустите контейнер в фоновом режиме с публикацией порта
-
 - Запустить второй контейнер из образа ubuntu:latest 
 - Создайть `docker network` и добавьте в нее оба запущенных контейнера
 - Используя `docker exec` запустить командную строку контейнера `ubuntu` в интерактивном режиме
 - Используя утилиту `curl` вызвать путь `/` контейнера с npm приложением  
 
-Для получения зачета, вам необходимо предоставить:
-- Наполнение Dockerfile с npm приложением
-- Скриншот вывода вызова команды списка docker сетей (docker network cli)
-- Скриншот вызова утилиты curl с успешным ответом
+### Решение:
+- Наполнение Dockerfile с npm приложением:  
+```
+FROM node:latest
+WORKDIR /usr/app
+COPY ./files /usr/app
+RUN npm install
+EXPOSE 3000
+ENTRYPOINT npm start && /bin/sh
+```
+
+- Скриншот вывода вызова команды списка docker сетей (docker network ls) и вызова утилиты curl с успешным ответом:  
+![docker network](https://github.com/GrigoriyAzatyan/devops-netology/blob/main/docker_network.jpg)
