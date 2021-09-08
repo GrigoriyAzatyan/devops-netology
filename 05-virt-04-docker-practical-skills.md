@@ -98,4 +98,5 @@ ENTRYPOINT npm start && /bin/sh
 ```
 
 - Скриншот вывода вызова команды списка docker сетей (docker network ls) и вызова утилиты curl с успешным ответом:  
+
 ![docker network](https://github.com/GrigoriyAzatyan/devops-netology/blob/main/docker_network.jpg)
