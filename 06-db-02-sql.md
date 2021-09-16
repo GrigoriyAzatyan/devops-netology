@@ -250,16 +250,16 @@ WHERE O.id != 0;
 
 ## Задача 6
 
-Создайте бэкап БД test_db и поместите его в volume, предназначенный для бэкапов (см. Задачу 1).
+Создайте бэкап БД test_db и поместите его в volume, предназначенный для бэкапов (см. Задачу 1).  
 `pg_dump -U postgres -O -F p -C test_db > /var/lib/postgresql/12/backup/test_db.bak`   
 
-Остановите контейнер с PostgreSQL (но не удаляйте volumes).
+Остановите контейнер с PostgreSQL (но не удаляйте volumes).  
 ` docker stop pgsql`  
 
-Поднимите новый пустой контейнер с PostgreSQL.
-`docker run -dt --name pgsql2 -v pgsql_backup:/var/lib/postgresql/12/backup -p 5432:5432 pgsql:latest`  
+Поднимите новый пустой контейнер с PostgreSQL.  
+`docker run -dt --name pgsql2 -v pgsql_backup:/var/lib/postgresql/12/backup -p 5432:5432 pgsql:latest`   
 
-Восстановите БД test_db в новом контейнере. Приведите список операций, который вы применяли для бэкапа данных и восстановления:   
+Восстановите БД test_db в новом контейнере. Приведите список операций, который вы применяли для бэкапа данных и восстановления:    
 ```
 docker exec -it pgsql2 bash  
 psql -U postgres   
