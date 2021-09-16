@@ -156,16 +156,18 @@ INSERT INTO public.clients("Фамилия", "Страна проживания"
 
 Используя SQL синтаксис:
 - вычислите количество записей для каждой таблицы. Приведите в ответе запросы и результаты их выполнения.:  
-`SELECT COUNT(*) FROM public.clients;`   
+`SELECT COUNT(*) FROM public.clients;`  
+
 | count|
 |------|
  |    5|
 |(1 row)|
 
 `SELECT COUNT(*) FROM public.orders;`  
+
 | count|
 |------|
- |    5|
+ |    6|
 |(1 row)|
  
 
