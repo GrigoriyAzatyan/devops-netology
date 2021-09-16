@@ -201,18 +201,14 @@ WHERE Фамилия='Иоганн Себастьян Бах';
 ## SQL-запрос для выдачи всех пользователей, которые совершили заказ, а также вывод данного запроса:  
 ```
 SELECT C."Фамилия", C."Страна проживания", O."Наименование" Товар  FROM public.clients C
-LEFT JOIN public.orders O
-ON C.Заказ=O.id; 
+INNER JOIN public.orders O ON C.Заказ=O.id
+WHERE O.id != 0;
 ```
 |             Фамилия             | Страна проживания |   Товар   |
 |---------------------------------|-------------------|-----------|
-| Ронни Джеймс Дио                | Russia            |           |
- |Ritchie Blackmore               | Russia            |           |
- |Иванов Иван Иванович            | USA               | Книга |
- |Петров Петр Петрович            | Canada            | Монитор |
- |Иоганн Себастьян Бах            | Japan             | Гитара |
-
-
+ |Иванов Иван Иванович            | USA               | Книга     |
+ |Петров Петр Петрович            | Canada            | Монитор   |
+ |Иоганн Себастьян Бах            | Japan             | Гитара    |
 
 
 # Задача 5
@@ -224,29 +220,29 @@ ON C.Заказ=O.id;
 
 ## Ответ:  
 ```
-EXPLAIN ANALYZE SELECT C."Фамилия", C."Страна проживания", O."Наименование" Товар  FROM public.clients C
-LEFT JOIN public.orders O ON C.Заказ=O.id;
+EXPLAIN ANALYZE SELECT C."Фамилия", C."Страна проживания", O."Наименование" Товар  FROM public.clients C INNER JOIN public.orders O ON C.Заказ=O.id WHERE O.id != 0;
 ```
 
 ```  
-                                                    QUERY PLAN
--------------------------------------------------------------------------------------------------------------------
- Hash Left Join  (cost=17.20..29.36 rows=170 width=654) (actual time=0.017..0.020 rows=5 loops=1)
+ ----------------------------------------------------------------------------------------------------------------
+ Hash Join  (cost=1.14..2.21 rows=4 width=654) (actual time=0.024..0.026 rows=3 loops=1)
    Hash Cond: (c."Заказ" = o.id)
-   ->  Seq Scan on clients c  (cost=0.00..11.70 rows=170 width=440) (actual time=0.005..0.006 rows=5 loops=1)
-   ->  Hash  (cost=13.20..13.20 rows=320 width=222) (actual time=0.008..0.008 rows=6 loops=1)
+   ->  Seq Scan on clients c  (cost=0.00..1.05 rows=5 width=440) (actual time=0.005..0.006 rows=5 loops=1)
+   ->  Hash  (cost=1.07..1.07 rows=5 width=222) (actual time=0.009..0.010 rows=5 loops=1)
          Buckets: 1024  Batches: 1  Memory Usage: 9kB
-         ->  Seq Scan on orders o  (cost=0.00..13.20 rows=320 width=222) (actual time=0.003..0.005 rows=6 loops=1)
- Planning Time: 0.072 ms
- Execution Time: 0.033 ms
+         ->  Seq Scan on orders o  (cost=0.00..1.07 rows=5 width=222) (actual time=0.004..0.005 rows=5 loops=1)
+               Filter: (id <> 0)
+               Rows Removed by Filter: 1
+ Planning Time: 0.093 ms
+ Execution Time: 0.043 ms
 ``` 
 
 Здесь мы видим примерно следующее:   
 - Seq Scan - последовательное чтение из таблиц orders и clients;  
 - Запрос по таблице clients продлился 0.005 с и прошелся по 5 строкам;  
-- Hash - было выполнено левое соединение, данные скопировались в хэш-таблицу в памяти, время 0.008 с, 6 строк;   
-- Запрос по таблице orders продлился 0.003 (или 0.005?) секунд, затронул 6 строк.  
-- Планировалось выполнить запрос за 0.072 ms, получилась пятилетка в три года (0.033 ms).  
+- Hash - было выполнено соединение, данные скопировались в хэш-таблицу в памяти, время 0.010 с, 5 строк;   
+- Запрос по таблице orders продлился 0.004 (или 0.005?) секунд, затронул 5 строк.  
+- Планировалось выполнить весь запрос за 0.093 ms, получилась пятилетка в три года (0.043 ms).  
 
 ## Задача 6
 
