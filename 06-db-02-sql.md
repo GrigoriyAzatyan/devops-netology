@@ -101,7 +101,7 @@ docker run -dt --name pgsql -v pgsql_data:/var/lib/postgresql/12/main -v pgsql_b
 | postgres | test-simple-user | test_db       | public       | clients    | UPDATE         | NO           | NO|
 | postgres | test-simple-user | test_db       | public       | clients    | DELETE         | NO           | NO|
 
-
+* Примечание: test-admin-user здесь явно не светится, т.к. я ему дал привилегии на всю базу. На практике проверено, от имени этого юзверя все работает.  
 
 - список пользователей с правами над таблицами test_db:
 
