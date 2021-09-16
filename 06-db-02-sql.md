@@ -22,11 +22,18 @@ docker run -dt --name pgsql -v pgsql_data:/var/lib/postgresql/12/main -v pgsql_b
 ## Задача 2
 
 В БД из задачи 1: 
-- создайте пользователя test-admin-user и БД test_db
-- в БД test_db создайте таблицу orders и clients (спeцификация таблиц ниже)
-- предоставьте привилегии на все операции пользователю test-admin-user на таблицы БД test_db
-- создайте пользователя test-simple-user  
-- предоставьте пользователю test-simple-user права на SELECT/INSERT/UPDATE/DELETE данных таблиц БД test_db
+- создайте пользователя test-admin-user и БД test_db:  
+`CREATE USER "test-admin-user";`  
+`CREATE DATABASE "test_db" OWNER=postgres;`   
+- в БД test_db создайте таблицу orders и clients (спeцификация таблиц ниже):  
+`CREATE TABLE orders(id serial PRIMARY KEY, "Наименование" character varying(100), "Цена" integer);`   
+`CREATE TABLE clients(id serial PRIMARY KEY, "Фамилия" character varying(100), "Страна проживания" character varying(100), "Заказ" serial, FOREIGN KEY ("Заказ") REFERENCES orders(id));`       
+- предоставьте привилегии на все операции пользователю test-admin-user на таблицы БД test_db:  
+`GRANT ALL PRIVILEGES ON DATABASE "test_db" TO "test-admin-user";`   
+- создайте пользователя test-simple-user:  
+`CREATE USER "test-simple-user";`  
+- предоставьте пользователю test-simple-user права на SELECT/INSERT/UPDATE/DELETE данных таблиц БД test_db:  
+`GRANT SELECT, INSERT, UPDATE, DELETE ON orders, clients TO "test-simple-user";`  
 
 Таблица orders:
 - id (serial primary key)
@@ -40,8 +47,50 @@ docker run -dt --name pgsql -v pgsql_data:/var/lib/postgresql/12/main -v pgsql_b
 - заказ (foreign key orders)
 
 Приведите:
-- итоговый список БД после выполнения пунктов выше,
-- описание таблиц (describe)
+- итоговый список БД после выполнения пунктов выше:
+
+|   Name    |  Owner   | Encoding | Collate |  Ctype  |       Access privileges        |  Size   | Tablespace |                Description                |
+|-----------|----------|----------|---------|---------|--------------------------------|---------|------------|-------------------------------------------|
+| postgres  | postgres | UTF8     | C.UTF-8 | C.UTF-8 |                                | 7953 kB | pg_default | default administrative connection database|
+| template0 | postgres | UTF8     | C.UTF-8 | C.UTF-8 | =c/postgres                   +| 7809 kB | pg_default | unmodifiable empty database               |
+|           |          |          |         |         | postgres=CTc/postgres          |         |            |                                           |
+| template1 | postgres | UTF8     | C.UTF-8 | C.UTF-8 | =c/postgres                   +| 7953 kB | pg_default | default template for new databases        |
+|           |          |          |         |         | postgres=CTc/postgres          |         |            |                                           |
+| test_db   | postgres | UTF8     | C.UTF-8 | C.UTF-8 | =Tc/postgres                  +| 8089 kB | pg_default |                                           |
+|           |          |          |         |         | postgres=CTc/postgres         +|         |            |                                           |
+|           |          |          |         |         | "test-admin-user"=CTc/postgres |         |            |                                           |
+
+
+- описание таблиц (describe):  
+
+                                                      **Table "public.orders"**  
+
+|          Column          |          Type          | Collation | Nullable |              Default              |
+|--------------------------|------------------------|-----------|----------|-----------------------------------|
+| id                       | integer                |           | not null | nextval('orders_id_seq'::regclass)|
+|Наименование              | character varying(100) |           |          |                                   |
+|Цена                      | integer                |           |          |                                   |
+|Indexes:                  |"orders_pkey" PRIMARY KEY, btree (id)                                              |
+|Referenced by:            | TABLE "clients" CONSTRAINT "clients_Заказ_fkey" FOREIGN KEY ("Заказ") REFERENCES orders(id)|
+
+
+
+
+                                                      **Table "public.clients"**  
+                                                      
+|              Column               |          Type          | Collation | Nullable |                    Default                    |
+|-----------------------------------|------------------------|-----------|----------|-----------------------------------------------|
+| id                                | integer                |           | not null | nextval('clients_id_seq'::regclass)           |
+| Фамилия                           | character varying(100) |           |          |                                               |
+| Страна проживания                 | character varying(100) |           |          |                                               |
+| Заказ                             | integer                |           | not null | nextval('"clients_Заказ_seq"'::regclass)      |
+|Indexes:                           |"clients_pkey" PRIMARY KEY, btree (id)                                                         |
+|Foreign-key constraints:           |"clients_Заказ_fkey" FOREIGN KEY ("Заказ") REFERENCES orders(id)                               |
+
+
+
+
+
 - SQL-запрос для выдачи списка пользователей с правами над таблицами test_db
 - список пользователей с правами над таблицами test_db
 
