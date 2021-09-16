@@ -19,7 +19,7 @@ docker run -dt --name pgsql -v pgsql_data:/var/lib/postgresql/12/main -v pgsql_b
 
 
 
-## Задача 2
+# Задача 2
 
 В БД из задачи 1: 
 - создайте пользователя test-admin-user и БД test_db:  
@@ -112,7 +112,7 @@ docker run -dt --name pgsql -v pgsql_data:/var/lib/postgresql/12/main -v pgsql_b
 | public | clients | table | postgres=arwdDxt/postgres       +|                   |    |
 |        |         |       | "test-simple-user"=arwd/postgres |                   |    |
 
-## Задача 3
+# Задача 3
 
 Используя SQL синтаксис - наполните таблицы следующими тестовыми данными:
 
@@ -138,6 +138,7 @@ docker run -dt --name pgsql -v pgsql_data:/var/lib/postgresql/12/main -v pgsql_b
 
 ## SQL-запросы:   
 ```
+INSERT INTO public.orders(id,Наименование,Цена) VALUES (0,NULL,0);
 INSERT INTO public.orders(Наименование,Цена) VALUES ('Шоколад',10);
 INSERT INTO public.orders(Наименование,Цена) VALUES('Принтер',3000);
 INSERT INTO public.orders(Наименование,Цена) VALUES('Книга',500);
@@ -167,7 +168,7 @@ INSERT INTO public.clients("Фамилия", "Страна проживания"
  
 
 
-## Задача 4
+# Задача 4
 
 Часть пользователей из таблицы clients решили оформить заказы из таблицы orders.
 
@@ -179,18 +180,66 @@ INSERT INTO public.clients("Фамилия", "Страна проживания"
 |Петров Петр Петрович| Монитор |
 |Иоганн Себастьян Бах| Гитара |
 
-Приведите SQL-запросы для выполнения данных операций.
+## SQL-запросы для выполнения данных операций:
 
-Приведите SQL-запрос для выдачи всех пользователей, которые совершили заказ, а также вывод данного запроса.
- 
-Подсказк - используйте директиву `UPDATE`.
+```
+UPDATE public.clients SET "Заказ"=(SELECT id FROM public.orders WHERE "Наименование"='Книга') 
+WHERE Фамилия='Иванов Иван Иванович';   
+UPDATE public.clients SET "Заказ"=(SELECT id FROM public.orders WHERE "Наименование"='Монитор') 
+WHERE Фамилия='Петров Петр Петрович';   
+UPDATE public.clients SET "Заказ"=(SELECT id FROM public.orders WHERE "Наименование"='Гитара') 
+WHERE Фамилия='Иоганн Себастьян Бах';   
+```
 
-## Задача 5
+
+
+## SQL-запрос для выдачи всех пользователей, которые совершили заказ, а также вывод данного запроса:  
+```
+SELECT C."Фамилия", C."Страна проживания", O."Наименование" Товар  FROM public.clients C
+LEFT JOIN public.orders O
+ON C.Заказ=O.id; 
+```
+|             Фамилия             | Страна проживания |   Товар   |
+|---------------------------------|-------------------|-----------|
+| Ронни Джеймс Дио                | Russia            |           |
+ |Ritchie Blackmore               | Russia            |           |
+ |Иванов Иван Иванович            | USA               | Книга |
+ |Петров Петр Петрович            | Canada            | Монитор |
+ |Иоганн Себастьян Бах            | Japan             | Гитара |
+
+
+
+
+# Задача 5
 
 Получите полную информацию по выполнению запроса выдачи всех пользователей из задачи 4 
 (используя директиву EXPLAIN).
 
 Приведите получившийся результат и объясните что значат полученные значения.
+
+## Ответ:  
+```
+EXPLAIN ANALYZE SELECT C."Фамилия", C."Страна проживания", O."Наименование" Товар  FROM public.clients C
+LEFT JOIN public.orders O test_db-# ON C.Заказ=O.id;
+```
+
+```  
+                                                    QUERY PLAN
+-------------------------------------------------------------------------------------------------------------------
+ Hash Left Join  (cost=17.20..29.36 rows=170 width=654) (actual time=0.017..0.020 rows=5 loops=1)
+   Hash Cond: (c."Заказ" = o.id)
+   ->  Seq Scan on clients c  (cost=0.00..11.70 rows=170 width=440) (actual time=0.005..0.006 rows=5 loops=1)
+   ->  Hash  (cost=13.20..13.20 rows=320 width=222) (actual time=0.008..0.008 rows=6 loops=1)
+         Buckets: 1024  Batches: 1  Memory Usage: 9kB
+         ->  Seq Scan on orders o  (cost=0.00..13.20 rows=320 width=222) (actual time=0.003..0.005 rows=6 loops=1)
+ Planning Time: 0.072 ms
+ Execution Time: 0.033 ms
+``` 
+
+
+
+
+
 
 ## Задача 6
 
