@@ -88,18 +88,19 @@ docker run -dt --name pgsql -v pgsql_data:/var/lib/postgresql/12/main -v pgsql_b
 
 - SQL-запрос для выдачи списка пользователей с правами над таблицами test_db:
 
-`SELECT table_catalog, table_schema, table_name, privilege_type FROM information_schema.table_privileges WHERE grantee = 'test-simple-user' OR grantee = 'test-admin-user';`  
+`SELECT * FROM information_schema.table_privileges WHERE grantee = 'test-simple-user' OR grantee = 'test-admin-user';`  
 
-| table_catalog | table_schema | table_name | privilege_type|
-|---------------|--------------|------------|---------------|
-| test_db       | public       | orders     | INSERT|
-| test_db       | public       | orders     | SELECT|
-| test_db       | public       | orders     | UPDATE|
-| test_db       | public       | orders     | DELETE|
-| test_db       | public       | clients    | INSERT|
-| test_db       | public       | clients    | SELECT|
-| test_db       | public       | clients    | UPDATE|
- |test_db       | public       | clients    | DELETE|
+ |grantor  |     grantee      | table_catalog | table_schema | table_name | privilege_type | is_grantable | with_hierarchy|
+|----------|------------------|---------------|--------------|------------|----------------|--------------|---------------|
+ |postgres | test-simple-user | test_db       | public       | orders     | INSERT         | NO           | NO|
+| postgres | test-simple-user | test_db       | public       | orders     | SELECT         | NO           | YES|
+| postgres | test-simple-user | test_db       | public       | orders     | UPDATE         | NO           | NO|
+| postgres | test-simple-user | test_db       | public       | orders     | DELETE         | NO           | NO|
+ |postgres | test-simple-user | test_db       | public       | clients    | INSERT         | NO           | NO|
+| postgres | test-simple-user | test_db       | public       | clients    | SELECT         | NO           | YES|
+| postgres | test-simple-user | test_db       | public       | clients    | UPDATE         | NO           | NO|
+| postgres | test-simple-user | test_db       | public       | clients    | DELETE         | NO           | NO|
+
 
 
 - список пользователей с правами над таблицами test_db:
@@ -135,11 +136,36 @@ docker run -dt --name pgsql -v pgsql_data:/var/lib/postgresql/12/main -v pgsql_b
 |Ронни Джеймс Дио| Russia|
 |Ritchie Blackmore| Russia|
 
+## SQL-запросы:   
+```
+INSERT INTO public.orders(Наименование,Цена) VALUES ('Шоколад',10);
+INSERT INTO public.orders(Наименование,Цена) VALUES('Принтер',3000);
+INSERT INTO public.orders(Наименование,Цена) VALUES('Книга',500);
+INSERT INTO public.orders(Наименование,Цена) VALUES('Монитор',7000);
+INSERT INTO public.orders(Наименование,Цена) VALUES('Гитара',4000);
+
+INSERT INTO public.clients("Фамилия", "Страна проживания", "Заказ") VALUES('Иванов Иван Иванович','USA', 0);
+INSERT INTO public.clients("Фамилия", "Страна проживания", "Заказ") VALUES('Петров Петр Петрович','Canada', 0);
+INSERT INTO public.clients("Фамилия", "Страна проживания", "Заказ") VALUES('Иоганн Себастьян Бах','Japan', 0);
+INSERT INTO public.clients("Фамилия", "Страна проживания", "Заказ") VALUES('Ронни Джеймс Дио','Russia', 0);	
+INSERT INTO public.clients("Фамилия", "Страна проживания", "Заказ") VALUES('Ritchie Blackmore','Russia', 0);		
+```
+
 Используя SQL синтаксис:
-- вычислите количество записей для каждой таблицы 
-- приведите в ответе:
-    - запросы 
-    - результаты их выполнения.
+- вычислите количество записей для каждой таблицы. Приведите в ответе запросы и результаты их выполнения.:  
+`SELECT COUNT(*) FROM public.clients;`   
+| count|
+|------|
+ |    5|
+|(1 row)|
+
+`SELECT COUNT(*) FROM public.orders;`  
+| count|
+|------|
+ |    5|
+|(1 row)|
+ 
+
 
 ## Задача 4
 
