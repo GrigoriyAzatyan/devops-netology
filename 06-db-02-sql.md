@@ -220,7 +220,11 @@ WHERE O.id != 0;
 
 ## Ответ:  
 ```
-EXPLAIN ANALYZE SELECT C."Фамилия", C."Страна проживания", O."Наименование" Товар  FROM public.clients C INNER JOIN public.orders O ON C.Заказ=O.id WHERE O.id != 0;
+EXPLAIN ANALYZE 
+SELECT C."Фамилия", C."Страна проживания", O."Наименование" Товар  
+FROM public.clients C 
+INNER JOIN public.orders O ON C.Заказ=O.id 
+WHERE O.id != 0;
 ```
 
 ```  
