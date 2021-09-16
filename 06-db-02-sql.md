@@ -220,7 +220,7 @@ ON C.Заказ=O.id;
 ## Ответ:  
 ```
 EXPLAIN ANALYZE SELECT C."Фамилия", C."Страна проживания", O."Наименование" Товар  FROM public.clients C
-LEFT JOIN public.orders O test_db-# ON C.Заказ=O.id;
+LEFT JOIN public.orders O ON C.Заказ=O.id;
 ```
 
 ```  
@@ -236,27 +236,38 @@ LEFT JOIN public.orders O test_db-# ON C.Заказ=O.id;
  Execution Time: 0.033 ms
 ``` 
 
-
-
-
-
+Здесь мы видим примерно следующее:   
+- Seq Scan - последовательное чтение из таблиц orders и clients;  
+- Запрос по таблице clients продлился 0.005 с и прошелся по 5 строкам;  
+- Hash - было выполнено левое соединение, данные скопировались в хэш-таблицу в памяти, время 0.008 с, 6 строк;   
+- Запрос по таблице orders продлился 0.003 (или 0.005?) секунд, затронул 6 строк.  
+- Планировалось выполнить запрос за 0.072 ms, получилась пятилетка в три года (0.033 ms).  
 
 ## Задача 6
 
 Создайте бэкап БД test_db и поместите его в volume, предназначенный для бэкапов (см. Задачу 1).
+`pg_dump -U postgres -O -F p -C test_db > /var/lib/postgresql/12/backup/test_db.bak`   
 
 Остановите контейнер с PostgreSQL (но не удаляйте volumes).
+` docker stop pgsql`  
 
 Поднимите новый пустой контейнер с PostgreSQL.
+`docker run -dt --name pgsql2 -v pgsql_backup:/var/lib/postgresql/12/backup -p 5432:5432 pgsql:latest`  
 
-Восстановите БД test_db в новом контейнере.
+Восстановите БД test_db в новом контейнере. Приведите список операций, который вы применяли для бэкапа данных и восстановления:   
+```
+docker exec -it pgsql2 bash  
+psql -U postgres   
+CREATE DATABASE "test_db" OWNER=postgres;  
+\q  
+psql -U postgres test_db < /var/lib/postgresql/12/backup/test_db.bak  
+psql -U postgres test_db  
+SELECT COUNT(*) FROM public.clients; 
 
-Приведите список операций, который вы применяли для бэкапа данных и восстановления. 
+| count|
+|------|
+ |    5|
+|(1 row)|
 
----
 
-### Как cдавать задание
 
-Выполненное домашнее задание пришлите ссылкой на .md-файл в вашем репозитории.
-
----
