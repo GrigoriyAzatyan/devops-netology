@@ -74,8 +74,6 @@ docker run -dt --name pgsql -v pgsql_data:/var/lib/postgresql/12/main -v pgsql_b
 |Referenced by:            | TABLE "clients" CONSTRAINT "clients_Заказ_fkey" FOREIGN KEY ("Заказ") REFERENCES orders(id)|
 
 
-
-
                                                       **Table "public.clients"**  
                                                       
 |              Column               |          Type          | Collation | Nullable |                    Default                    |
@@ -88,11 +86,30 @@ docker run -dt --name pgsql -v pgsql_data:/var/lib/postgresql/12/main -v pgsql_b
 |Foreign-key constraints:           |"clients_Заказ_fkey" FOREIGN KEY ("Заказ") REFERENCES orders(id)                               |
 
 
+- SQL-запрос для выдачи списка пользователей с правами над таблицами test_db:
+
+`SELECT table_catalog, table_schema, table_name, privilege_type FROM information_schema.table_privileges WHERE grantee = 'test-simple-user' OR grantee = 'test-admin-user';`  
+
+| table_catalog | table_schema | table_name | privilege_type|
+|---------------|--------------|------------|---------------|
+| test_db       | public       | orders     | INSERT|
+| test_db       | public       | orders     | SELECT|
+| test_db       | public       | orders     | UPDATE|
+| test_db       | public       | orders     | DELETE|
+| test_db       | public       | clients    | INSERT|
+| test_db       | public       | clients    | SELECT|
+| test_db       | public       | clients    | UPDATE|
+ |test_db       | public       | clients    | DELETE|
 
 
+- список пользователей с правами над таблицами test_db:
 
-- SQL-запрос для выдачи списка пользователей с правами над таблицами test_db
-- список пользователей с правами над таблицами test_db
+| Schema |  Name  | Type  |        Access privileges         | Column privileges | Policies|
+|--------|--------|-------|----------------------------------|-------------------|----------|
+| public | orders | table | postgres=arwdDxt/postgres       +|                   |     |
+|        |        |       | "test-simple-user"=arwd/postgres |                   |      |
+| public | clients | table | postgres=arwdDxt/postgres       +|                   |    |
+|        |         |       | "test-simple-user"=arwd/postgres |                   |    |
 
 ## Задача 3
 
