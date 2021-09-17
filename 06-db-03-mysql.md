@@ -78,7 +78,7 @@ mysql> select * from orders where price > 300;
 1 row in set (0.00 sec)
 ```
 
-## Задача 2
+# Задача 2
 
 Создайте пользователя test в БД c паролем test-pass, используя:
 - плагин авторизации mysql_native_password
@@ -128,11 +128,7 @@ mysql> SELECT User, max_questions, password_lifetime, User_attributes  FROM mysq
 ```
 
 
-
-
-
-
-## Задача 3
+# Задача 3
 
 Установите профилирование `SET profiling = 1`.
 Изучите вывод профилирования команд `SHOW PROFILES;`.
@@ -176,7 +172,7 @@ show profiles;
 ```
 
 
-## Задача 4 
+# Задача 4 
 
 Изучите файл `my.cnf` в директории /etc/mysql.
 
@@ -187,12 +183,6 @@ show profiles;
 - Буффер кеширования 30% от ОЗУ
 - Размер файла логов операций 100 Мб
 
-Приведите в ответе измененный файл `my.cnf`.
+Приведите в ответе измененный файл `my.cnf`:
+[Ссылка на конфиг, изменения см. в конце файла](https://github.com/GrigoriyAzatyan/devops-netology/blob/main/mysqld.cnf)
 
----
-
-### Как оформить ДЗ?
-
-Выполненное домашнее задание пришлите ссылкой на .md-файл в вашем репозитории.
-
----
