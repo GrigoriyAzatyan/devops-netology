@@ -185,13 +185,13 @@ show profiles;
 `innodb_file_per_table = 1`
 
 Размер буфера с незакомиченными транзакциями 1 Мб:  
-`innodb_log_buffer_size = 1Mb`  
+`innodb_log_buffer_size = 1M`  
 
-Буфер кеширования 30% от ОЗУ (4 ГБ):  
-`innodb_buffer_pool_size = 1228Mb`  
+Буфер кеширования 30% от ОЗУ (Всего 4 ГБ, доступно 2.5, 30% = 750 Мб):  
+`innodb_buffer_pool_size = 750M`  
 
 Размер файла логов операций 100 Мб:  
-`innodb_log_file_size = 100Mb`  
+`innodb_log_file_size = 100M`  
 
 Приведите в ответе измененный файл `my.cnf`:   
 [Ссылка на конфиг, изменения см. в конце файла](https://github.com/GrigoriyAzatyan/devops-netology/blob/main/mysqld.cnf)
@@ -202,15 +202,14 @@ show profiles;
 [--] InnoDB is enabled.
 [--] InnoDB Thread Concurrency: 0
 [OK] InnoDB File per table is activated
-[OK] InnoDB buffer pool / data size: 2.0G/32.0K
-[!!] Ratio InnoDB log file size / InnoDB Buffer pool size (9.765625 %): 100.0M * 2/2.0G should be equal to 25%
-[!!] InnoDB buffer pool instances: 8
-[--] Number of InnoDB Buffer Pool Chunk : 16 for 8 Buffer Pool Instance(s)
+[OK] InnoDB buffer pool / data size: 768.0M/32.0K
+[OK] Ratio InnoDB log file size / InnoDB Buffer pool size: 100.0M * 2/768.0M should be equal to 25%
+[OK] InnoDB buffer pool instances: 1
+[--] Number of InnoDB Buffer Pool Chunk : 6 for 1 Buffer Pool Instance(s)
 [OK] Innodb_buffer_pool_size aligned with Innodb_buffer_pool_chunk_size & Innodb_buffer_pool_instances
-[OK] InnoDB Read buffer efficiency: 94.25% (13611 hits/ 14441 total)
-[OK] InnoDB Write log efficiency: 97.81% (626 hits/ 640 total)
-[OK] InnoDB log waits: 0.00% (0 waits / 14 writes)
-
+[OK] InnoDB Read buffer efficiency: 96.96% (27401 hits/ 28260 total)
+[OK] InnoDB Write log efficiency: 98.29% (633 hits/ 644 total)
+[OK] InnoDB log waits: 0.00% (0 waits / 11 writes)
 ```
 
 
