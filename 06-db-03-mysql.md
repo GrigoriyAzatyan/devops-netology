@@ -64,15 +64,19 @@ mysql> show tables;
 | orders            |
 +-------------------+
 1 row in set (0.00 sec)
+```
 
+**Приведите в ответе** количество записей с `price` > 300:
 
-
-
-
-
-**Приведите в ответе** количество записей с `price` > 300.
-
-В следующих заданиях мы будем продолжать работу с данным контейнером.
+```
+mysql> select * from orders where price > 300;   
++----+----------------+-------+
+| id | title          | price |
++----+----------------+-------+
+|  2 | My little pony |   500 |
++----+----------------+-------+
+1 row in set (0.00 sec)
+```
 
 ## Задача 2
 
@@ -85,10 +89,48 @@ mysql> show tables;
     - Фамилия "Pretty"
     - Имя "James"
 
-Предоставьте привелегии пользователю `test` на операции SELECT базы `test_db`.
-    
+```
+CREATE USER 'test'@'%' IDENTIFIED BY 'Pa$$w0rd'   
+WITH   
+MAX_QUERIES_PER_HOUR 100  
+PASSWORD EXPIRE INTERVAL 180 DAY   
+FAILED_LOGIN_ATTEMPTS 3  
+ATTRIBUTE '{"fname": "James", "lname": "Pretty"}';   
+```
+
+Предоставьте привелегии пользователю `test` на операции SELECT базы `test_db`: 
+```
+GRANT SELECT ON test_db.* TO 'test'@'%';  
+```
+   
 Используя таблицу INFORMATION_SCHEMA.USER_ATTRIBUTES получите данные по пользователю `test` и 
-**приведите в ответе к задаче**.
+**приведите в ответе к задаче**.   
+```
+mysql> select * from INFORMATION_SCHEMA.USER_ATTRIBUTES where user = 'test';
++------+------+---------------------------------------+
+| USER | HOST | ATTRIBUTE                             |
++------+------+---------------------------------------+
+| test | %    | {"fname": "James", "lname": "Pretty"} |
++------+------+---------------------------------------+
+1 row in set (0.00 sec)
+```
+Вот еще:  
+```
+mysql> SELECT User, max_questions, password_lifetime, User_attributes  FROM mysql.user where user='test';
++------+-------------+---------------+-------------------+-------------------------------------------------------------+
+| User | max_questions | password_lifetime | User_attributes                                                                                                       
++------+-------------+---------------+-------------------+-------------------------------------------------------------+
+| test |           100 |               180 | {"metadata": {"fname": "James", "lname": "Pretty"}, "Password_locking": 
+                                           | {"failed_login_attempts": 3, "password_lock_time_days": 0}}               |
++------+---------------+-------------------+---------------------------------------------------------------------------+
+1 row in set (0.00 sec)
+
+```
+
+
+
+
+
 
 ## Задача 3
 
