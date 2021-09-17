@@ -137,11 +137,44 @@ mysql> SELECT User, max_questions, password_lifetime, User_attributes  FROM mysq
 Установите профилирование `SET profiling = 1`.
 Изучите вывод профилирования команд `SHOW PROFILES;`.
 
-Исследуйте, какой `engine` используется в таблице БД `test_db` и **приведите в ответе**.
+Исследуйте, какой `engine` используется в таблице БД `test_db` и **приведите в ответе**:  
+```
+mysql> SHOW CREATE TABLE orders;
+
+|--------|---------------------------------------------------|
+| Table  | Create Table                                      |
+|--------|---------------------------------------------------|                                                           
+| orders | CREATE TABLE `orders` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `title` varchar(80) NOT NULL,
+  `price` int DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) 
+ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci |
+```
 
 Измените `engine` и **приведите время выполнения и запрос на изменения из профайлера в ответе**:
-- на `MyISAM`
-- на `InnoDB`
+- на `MyISAM`  
+```
+ALTER TABLE orders ENGINE=MyISAM;  
+show profiles;  
++----------+------------+----------------------------------+
+| Query_ID | Duration   | Query                            |
++----------+------------+----------------------------------+
+|       36 | 0.01115200 | ALTER TABLE orders ENGINE=MyISAM |
++----------+------------+----------------------------------+
+```
+- на `InnoDB`:
+```
+ALTER TABLE orders ENGINE=InnoDB;   
+show profiles;  
++----------+------------+----------------------------------+
+| Query_ID | Duration   | Query                            |
++----------+------------+----------------------------------+
+|       37 | 0.02306500 | ALTER TABLE orders ENGINE=InnoDB |
++----------+------------+----------------------------------+
+```
+
 
 ## Задача 4 
 
