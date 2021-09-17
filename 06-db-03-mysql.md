@@ -177,11 +177,21 @@ show profiles;
 Изучите файл `my.cnf` в директории /etc/mysql.
 
 Измените его согласно ТЗ (движок InnoDB):
-- Скорость IO важнее сохранности данных
-- Нужна компрессия таблиц для экономии места на диске
-- Размер буффера с незакомиченными транзакциями 1 Мб
-- Буффер кеширования 30% от ОЗУ
-- Размер файла логов операций 100 Мб
+Скорость IO важнее сохранности данных:  
+`innodb_flush_method = O_DSYNC`  
+`innodb_flush_log_at_trx_commit = 0`  
+
+Нужна компрессия таблиц для экономии места на диске:  
+`innodb_file_per_table = 1`
+
+Размер буфера с незакомиченными транзакциями 1 Мб:  
+`innodb_log_buffer_size = 1Mb`  
+
+Буфер кеширования 30% от ОЗУ (4 ГБ):  
+`innodb_buffer_pool_size = 1228Mb`  
+
+Размер файла логов операций 100 Мб:  
+`innodb_log_file_size = 100Mb`  
 
 Приведите в ответе измененный файл `my.cnf`:   
 [Ссылка на конфиг, изменения см. в конце файла](https://github.com/GrigoriyAzatyan/devops-netology/blob/main/mysqld.cnf)
@@ -192,14 +202,14 @@ show profiles;
 [--] InnoDB is enabled.
 [--] InnoDB Thread Concurrency: 0
 [OK] InnoDB File per table is activated
-[OK] InnoDB buffer pool / data size: 122.0M/32.0K
-[!!] Ratio InnoDB log file size / InnoDB Buffer pool size (163.934426229508 %): 100.0M * 2/122.0M should be equal to 25%
-[OK] InnoDB buffer pool instances: 1
-[--] Number of InnoDB Buffer Pool Chunk : 1 for 1 Buffer Pool Instance(s)
+[OK] InnoDB buffer pool / data size: 2.0G/32.0K
+[!!] Ratio InnoDB log file size / InnoDB Buffer pool size (9.765625 %): 100.0M * 2/2.0G should be equal to 25%
+[!!] InnoDB buffer pool instances: 8
+[--] Number of InnoDB Buffer Pool Chunk : 16 for 8 Buffer Pool Instance(s)
 [OK] Innodb_buffer_pool_size aligned with Innodb_buffer_pool_chunk_size & Innodb_buffer_pool_instances
-[OK] InnoDB Read buffer efficiency: 94.16% (13600 hits/ 14443 total)
-[OK] InnoDB Write log efficiency: 98.44% (629 hits/ 639 total)
-[OK] InnoDB log waits: 0.00% (0 waits / 10 writes)
+[OK] InnoDB Read buffer efficiency: 94.25% (13611 hits/ 14441 total)
+[OK] InnoDB Write log efficiency: 97.81% (626 hits/ 640 total)
+[OK] InnoDB log waits: 0.00% (0 waits / 14 writes)
 
 ```
 
