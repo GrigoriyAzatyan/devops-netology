@@ -186,3 +186,21 @@ show profiles;
 Приведите в ответе измененный файл `my.cnf`:
 [Ссылка на конфиг, изменения см. в конце файла](https://github.com/GrigoriyAzatyan/devops-netology/blob/main/mysqld.cnf)
 
+Отчет MySQL Tuner:   
+```
+-------- InnoDB Metrics ----------------------------------------------------------------------------
+[--] InnoDB is enabled.
+[--] InnoDB Thread Concurrency: 0
+[OK] InnoDB File per table is activated
+[OK] InnoDB buffer pool / data size: 122.0M/32.0K
+[!!] Ratio InnoDB log file size / InnoDB Buffer pool size (163.934426229508 %): 100.0M * 2/122.0M should be equal to 25%
+[OK] InnoDB buffer pool instances: 1
+[--] Number of InnoDB Buffer Pool Chunk : 1 for 1 Buffer Pool Instance(s)
+[OK] Innodb_buffer_pool_size aligned with Innodb_buffer_pool_chunk_size & Innodb_buffer_pool_instances
+[OK] InnoDB Read buffer efficiency: 94.16% (13600 hits/ 14443 total)
+[OK] InnoDB Write log efficiency: 98.44% (629 hits/ 639 total)
+[OK] InnoDB log waits: 0.00% (0 waits / 10 writes)
+
+```
+
+
