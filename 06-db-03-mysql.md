@@ -183,7 +183,7 @@ show profiles;
 - Буффер кеширования 30% от ОЗУ
 - Размер файла логов операций 100 Мб
 
-Приведите в ответе измененный файл `my.cnf`:
+Приведите в ответе измененный файл `my.cnf`:   
 [Ссылка на конфиг, изменения см. в конце файла](https://github.com/GrigoriyAzatyan/devops-netology/blob/main/mysqld.cnf)
 
 Отчет MySQL Tuner:   
