@@ -81,5 +81,5 @@ innodb_flush_method = O_DSYNC
 innodb_flush_log_at_trx_commit = 0
 innodb_file_per_table = 1
 innodb_log_buffer_size = 1Mb
-innodb_buffer_pool_size = 122Mb
+innodb_buffer_pool_size = 1228Mb
 innodb_log_file_size = 100Mb
