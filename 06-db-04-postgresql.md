@@ -6,6 +6,7 @@
 
 Воспользуйтесь командой `\?` для вывода подсказки по имеющимся в `psql` управляющим командам.
 
+## Dockerfile:
 ```
 FROM ubuntu:focal-20210827  
 ENV TZ=Asia/Yekaterinburg  
@@ -18,9 +19,10 @@ EXPOSE 5432
 ENTRYPOINT pg_ctlcluster 13 main start && su - postgres -c "psql -U postgres -d postgres -c \"alter user postgres with password 'Qwerty123';\"" && /bin/sh
 ```
 
+## Запуск:
 ```
 docker volume create pgsql-13_data
-docker run -dt --name pgsql-13 -e PGPASSWORD=Qwerty123 -v pgsql-13_data:/var/lib/postgresql/13/main -p 5432:5432 pgsql-13v2:latest
+docker run -dt --name pgsql-13 -v pgsql-13_data:/var/lib/postgresql/13/main -p 5432:5432 pgsql-13v2:latest
 ```
 
 **Найдите и приведите** управляющие команды для:
@@ -79,17 +81,17 @@ postgres=# \d pg_namespace;
 ```
 Аналогично - для каждой таблицы.
 
-- выхода из psql
+- выхода из psql  
 `\q`
 
 ## Задача 2
 
-Используя `psql` создайте БД `test_database`:
-psql -h 172.17.0.2 -U postgres -c "CREATE DATABASE "test_db" OWNER=postgres;"
+Используя psql создайте БД test_database:  
+`psql -h 172.17.0.2 -U postgres -c "CREATE DATABASE "test_db" OWNER=postgres;"` 
 
 Изучите [бэкап БД](https://github.com/netology-code/virt-homeworks/tree/master/06-db-04-postgresql/test_data).
 
-Восстановите бэкап БД в `test_database`:
+Восстановите бэкап БД в test_database:  
 `psql -h 172.17.0.2 -U postgres test_db < /docker/pgsql/dump.sql`
 
 Перейдите в управляющую консоль `psql` внутри контейнера.
