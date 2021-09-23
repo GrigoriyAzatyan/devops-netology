@@ -123,21 +123,53 @@ test_db=# select attname, avg_width from pg_stats where tablename='orders' order
 ```
 
 
-## Задача 3
+# Задача 3
 
 Архитектор и администратор БД выяснили, что ваша таблица orders разрослась до невиданных размеров и
 поиск по ней занимает долгое время. Вам, как успешному выпускнику курсов DevOps в нетологии предложили
 провести разбиение таблицы на 2 (шардировать на orders_1 - price>499 и orders_2 - price<=499).
 
-Предложите SQL-транзакцию для проведения данной операции.
+## Предложите SQL-транзакцию для проведения данной операции.
+```
+CREATE TABLE orders_1 (CHECK (price > 499)) INHERITS (orders);
+CREATE TABLE orders_2 (CHECK (price <= 499)) INHERITS (orders);
 
-Можно ли было изначально исключить "ручное" разбиение при проектировании таблицы orders?
+CREATE RULE rule_orders_1 AS ON INSERT TO orders WHERE (price > 499) 
+DO INSTEAD INSERT INTO orders_1 VALUES (NEW.*);
+
+CREATE RULE rule_orders_2 AS ON INSERT TO orders WHERE (price <= 499) 
+DO INSTEAD INSERT INTO orders_2 VALUES (NEW.*);
+
+INSERT INTO orders_1 (title, price) (select title, price from orders where price > 499);
+INSERT INTO orders_2 (title, price) (select title, price from orders where price <= 499);
+```
+
+## Можно ли было изначально исключить "ручное" разбиение при проектировании таблицы orders?  
+Можно заранее спроектировать разбиение таблицы путем [декларативного партиционирования](https://pgdash.io/blog/postgres-11-sharding.html): 
+Основная таблица в таком случае светится в выводе \dt+ как "секционированная таблица" и не заполняется даннными. Данные пишутся сразу в заранее подготовленные партиции.
 
 
+# Задача 4
 
-## Задача 4
+Используя утилиту `pg_dump` создайте бекап БД `test_database`.  
+`pg_dump -h 172.17.0.2 -p 5432 -U postgres -O -F p  -C test_db > /docker/pgsql/new_dump.sql`  
 
-Используя утилиту `pg_dump` создайте бекап БД `test_database`.
+Как бы вы доработали бэкап-файл, чтобы добавить уникальность значения столбца `title` для таблиц `test_database`?  
 
-Как бы вы доработали бэкап-файл, чтобы добавить уникальность значения столбца `title` для таблиц `test_database`?
+- Вариант 1:
+```
+CREATE INDEX uniq_title ON orders(title);
+CREATE INDEX uniq_title_1 ON orders_1(title);
+CREATE INDEX uniq_title_2 ON orders_2(title);
+```
+
+- Вариант 2:  
+```
+CREATE TABLE public.orders (
+    id integer NOT NULL CONSTRAINT must_be_different UNIQUE,
+    title character varying(80) NOT NULL,
+    price integer DEFAULT 0
+);
+```
+
 
