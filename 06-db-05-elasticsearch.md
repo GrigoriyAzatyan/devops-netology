@@ -34,8 +34,7 @@ https://hub.docker.com/repository/docker/gregory78/elasticsearch
 ![Скриншот](https://github.com/GrigoriyAzatyan/devops-netology/blob/main/GET.jpg)
 
 ### Примечание
-Также для запуска контейнера пришлось применить следующую команду:  
-`sysctl -w vm.max_map_count=262144`
+Также для запуска контейнера пришлось применить следующую команду:  `sysctl -w vm.max_map_count=262144`
 
 # Задача 2
 
