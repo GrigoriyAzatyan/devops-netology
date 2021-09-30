@@ -38,11 +38,6 @@ https://hub.docker.com/repository/docker/gregory78/elasticsearch
 
 # Задача 2
 
-В этом задании вы научитесь:
-- создавать и удалять индексы
-- изучать состояние кластера
-- обосновывать причину деградации доступности данных
-
 Ознакомтесь с [документацией](https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-create-index.html) 
 и добавьте в `elasticsearch` 3 индекса, в соответствии со таблицей:
 
@@ -52,18 +47,60 @@ https://hub.docker.com/repository/docker/gregory78/elasticsearch
 | ind-2 | 1 | 2 |
 | ind-3 | 2 | 4 |
 
-Получите список индексов и их статусов, используя API и **приведите в ответе** на задание.
+## Добавление индексов:  
+```
+curl -X PUT -H "Content-Type:application/json" -d '{"settings": {"index": {"number_of_shards": 1, "number_of_replicas": 0}}}' http://localhost:9200/ind-1
+curl -X PUT -H "Content-Type:application/json" -d '{"settings": {"index": {"number_of_shards": 2, "number_of_replicas": 1}}}' http://localhost:9200/ind-2
+curl -X PUT -H "Content-Type:application/json" -d '{"settings": {"index": {"number_of_shards": 4, "number_of_replicas": 2}}}' http://localhost:9200/ind-3
+```
 
-Получите состояние кластера `elasticsearch`, используя API.
+## Получите список индексов и их статусов, используя API и **приведите в ответе** на задание.  
 
-Как вы думаете, почему часть индексов и кластер находится в состоянии yellow?
+```
+curl http://localhost:9200/_cat/indices  
 
-Удалите все индексы.
+green  open ind-1 DPKEoEAlT-ayiG4knJaL0w 1 0 0 0 208b 208b
+yellow open ind-3 7TaCyURsQJmEC5ybCao8bg 4 2 0 0 832b 832b
+yellow open ind-2 A9Q8jr6hQqmDZPBARGr37g 2 1 0 0 416b 416b
 
-**Важно**
+```
 
-При проектировании кластера elasticsearch нужно корректно рассчитывать количество реплик и шард,
-иначе возможна потеря данных индексов, вплоть до полной, при деградации системы.
+## Получите состояние кластера `elasticsearch`, используя API.
+
+```
+curl http://localhost:9200/_cluster/health
+
+{
+"cluster_name": "netology",
+"status": "yellow",
+"timed_out": false,
+"number_of_nodes": 1,
+"number_of_data_nodes": 1,
+"active_primary_shards": 7,
+"active_shards": 7,
+"relocating_shards": 0,
+"initializing_shards": 0,
+"unassigned_shards": 10,
+"delayed_unassigned_shards": 0,
+"number_of_pending_tasks": 0,
+"number_of_in_flight_fetch": 0,
+"task_max_waiting_in_queue_millis": 0,
+"active_shards_percent_as_number": 41.17647058823529
+}
+```
+
+## Как вы думаете, почему часть индексов и кластер находится в состоянии yellow?  
+Потому что в кластере всего один узел, а мы насоздавали реплики для индексов, и привязать их некуда.   
+
+## Удалите все индексы.
+Кластер облегченно вздохнул:  
+```
+curl -X DELETE http://localhost:9200/ind-{1..3} 
+
+{"acknowledged":true}
+{"acknowledged":true}
+{"acknowledged":true}
+```
 
 ## Задача 3
 
