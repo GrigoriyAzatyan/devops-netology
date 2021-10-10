@@ -72,8 +72,6 @@ is 1.0.8. You can update by downloading from www.terraform.io/downloads.html
 
 ```
 root@ubuntu-20:~/.tfenv# /usr/bin/terraform --version
-```
-
 Terraform v1.0.8
 on linux_amd64
 
