@@ -22,6 +22,22 @@ AWS предоставляет достаточно много бесплатн�
 
 В виде результата задания приложите вывод команды `aws configure list`.
 
+## Ответ:
+
+![](https://github.com/GrigoriyAzatyan/devops-netology/blob/main/aws.jpg)
+
+```
+grigorii_azatyan@ubuntu-20:~$ aws configure list
+      Name                    Value             Type    Location
+      ----                    -----             ----    --------
+   profile                <not set>             None    None
+access_key     ****************3LQG              env
+secret_key     ****************s9g/              env
+    region                eu-west-2      config-file    ~/.aws/config
+```
+
+
+
 # Задача 1 (Вариант с Yandex.Cloud). Регистрация в aws и знакомство с основами (необязательно, но крайне желательно).
 
 1. Подробная инструкция на русском языке содержится [здесь](https://cloud.yandex.ru/docs/solutions/infrastructure-management/terraform-quickstart).
