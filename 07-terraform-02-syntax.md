@@ -43,5 +43,5 @@ secret_key     ****************s9g/              env
 Packer
 
 ## Ссылка на репозиторий с исходной конфигурацией терраформа.  
-https://github.com/GrigoriyAzatyan/devops-netology/tree/main/terraform/AWS
+https://github.com/GrigoriyAzatyan/devops-netology/tree/main/terraform/Lesson1
 
