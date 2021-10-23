@@ -2,30 +2,24 @@
 
 ```
 repos:
-- id: /.*/
+
+# Укажите, что атлантис должен работать только для репозиториев в вашем github (или любом другом) аккаунте:
+- id: github.com/GrigoriyAzatyan/terraform
   branch: /.*/
-  apply_requirements: [approved, mergeable]
-  workflow: custom
-  allowed_overrides: [apply_requirements, workflow, delete_source_branch_on_merge]
-  allowed_workflows: [custom]
+  
+# На стороне клиентского конфига разрешите изменять workflow, то есть для каждого репозитория можно будет указать свои дополнительные команды:
   allow_custom_workflows: true
-  delete_source_branch_on_merge: true
-  pre_workflow_hooks: 
-    - run: my-pre-workflow-hook-command arg1
-- id: github.com/myorg/specific-repo
 workflows:
   custom:
     plan:
       steps:
-      - run: my-custom-command arg1 arg2
+      - run
       - init
+# В workflow используемом по-умолчанию сделайте так, что бы во время планирования не происходил lock состояния:
       - plan:
           extra_args: ["-lock", "false"]
-      - run: my-custom-command arg1 arg2
     apply:
       steps:
-      - run: echo hi
       - apply
-	  }
 ```
 
