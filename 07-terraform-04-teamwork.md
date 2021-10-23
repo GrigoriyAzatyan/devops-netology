@@ -1,25 +1,3 @@
 # server.yaml  
 
-```
-repos:
-
-# Укажите, что атлантис должен работать только для репозиториев в вашем github (или любом другом) аккаунте:
-- id: github.com/GrigoriyAzatyan/terraform
-  branch: /.*/
-  
-# На стороне клиентского конфига разрешите изменять workflow, то есть для каждого репозитория можно будет указать свои дополнительные команды:
-  allow_custom_workflows: true
-workflows:
-  custom:
-    plan:
-      steps:
-      - run
-      - init
-# В workflow используемом по-умолчанию сделайте так, что бы во время планирования не происходил lock состояния:
-      - plan:
-          extra_args: ["-lock", "false"]
-    apply:
-      steps:
-      - apply
-```
 
