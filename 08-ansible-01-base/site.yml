@@ -1,0 +1,11 @@
+---
+  - name: Print os facts
+    hosts: all
+    tasks:
+      - name: Print OS
+        debug:
+          msg: "{{ ansible_distribution }}"
+      - name: Print fact
+        debug:
+          msg: "{{ some_fact }}"
+
