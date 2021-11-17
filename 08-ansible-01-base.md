@@ -91,5 +91,6 @@ ok: [ubuntu] => {
 
 12. Заполните `README.md` ответами на вопросы. Сделайте `git push` в ветку `master`. В ответе отправьте ссылку на ваш открытый репозиторий с изменённым `playbook` и заполненным `README.md`.
 
+https://github.com/GrigoriyAzatyan/devops-netology/tree/main/08-ansible-01-base
 
 
