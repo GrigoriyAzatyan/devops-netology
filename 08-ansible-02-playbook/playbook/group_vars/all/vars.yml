@@ -1,0 +1,4 @@
+---
+java_jdk_version: 11.0.13
+java_oracle_jdk_package: jdk-11.0.13_linux-x64_bin.tar.gz
+kibana_version: 7.15.2

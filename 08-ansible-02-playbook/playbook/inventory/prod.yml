@@ -1,0 +1,7 @@
+---
+elasticsearch:
+  hosts:
+    ubuntu:
+       ansible_connection: docker
+#      ansible_connection: ssh
+#      ansible_user: root
