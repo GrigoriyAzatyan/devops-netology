@@ -1,6 +1,0 @@
----
-    - name: start Filebeat
-      become: true
-      systemd:
-        name: filebeat
-        state: started

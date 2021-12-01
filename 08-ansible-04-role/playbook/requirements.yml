@@ -3,3 +3,12 @@
     scm: git
     version: "2.0.0"
     name: elastic
+  - src: https://github.com/GrigoriyAzatyan/kibana-role.git
+    scm: git
+    version: "v0.1"
+    name: kibana-role
+  - src: https://github.com/GrigoriyAzatyan/filebeat-role.git
+    scm: git
+    version: "v0.1"
+    name: filebeat-role
+

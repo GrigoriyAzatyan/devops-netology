@@ -1,6 +1,0 @@
----
-    - name: restart Kibana
-      become: true
-      service:
-        name: kibana
-        state: restarted
