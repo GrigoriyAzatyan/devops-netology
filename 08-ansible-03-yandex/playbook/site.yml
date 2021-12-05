@@ -29,11 +29,11 @@
 - name: Install Kibana
   hosts: elasticsearch
   handlers:
-    - name: restart Kibana
+    - name: start Kibana
       become: true
       service:
         name: kibana
-        state: restarted
+        state: started
   tasks:
     - name: "Download Kibana's rpm"
       get_url:
@@ -46,12 +46,49 @@
       yum:
         name: "/tmp/kibana-{{ elk_stack_version }}-x86_64.rpm"
         state: present
+    - name: chown
+      become: true
+      file:
+        path: /usr/share/kibana
+        owner: kibana
+        group: kibana
     - name: Configure Kibana
       become: true
       template:
         src: kibana-config.yml.j2
         dest: /etc/kibana/kibana.yml
-    - name: chown
+      notify: start Kibana
+
+- name: Install Filebeat
+  hosts: elasticsearch
+  handlers:
+    - name: start Filebeat
       become: true
-      command: chown kibana:kibana -R /usr/share/kibana
-      notify: restart Kibana
+      service:
+        name: filebeat
+        state: started
+  tasks:
+    - name: "Download filebeat's rpm"
+      get_url:
+        url: "https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-{{ elk_stack_version }}-x86_64.rpm"
+        dest: "/tmp/filebeat-{{ elk_stack_version }}-x86_64.rpm"
+      register: download_filebeat
+      until: download_filebeat is succeeded
+    - name: Install filebeat
+      become: true
+      yum:
+        name: "/tmp/filebeat-{{ elk_stack_version }}-x86_64.rpm"
+        state: present
+    - name: enable filebeat service
+      become: true
+      systemd:
+        name: filebeat
+        enabled: yes
+        masked: no
+    - name: Configure filebeat
+      become: true
+      template:
+        src: filebeat.yml.j2
+        dest: /etc/filebeat/filebeat.yml
+      notify: start Filebeat
+
