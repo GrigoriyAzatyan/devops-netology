@@ -14,17 +14,20 @@
         dest: "/tmp/elasticsearch-{{ elk_stack_version }}-x86_64.rpm"
       register: download_elastic
       until: download_elastic is succeeded
+      tags: elasticsearch
     - name: Install Elasticsearch
       become: true
       yum:
         name: "/tmp/elasticsearch-{{ elk_stack_version }}-x86_64.rpm"
         state: present
+      tags: elasticsearch
     - name: Configure Elasticsearch
       become: true
       template:
         src: elasticsearch.yml.j2
         dest: /etc/elasticsearch/elasticsearch.yml
       notify: restart Elasticsearch
+      tags: elasticsearch
 
 - name: Install Kibana
   hosts: elasticsearch
@@ -41,23 +44,27 @@
         dest: "/tmp/kibana-{{ elk_stack_version }}-x86_64.rpm"
       register: download_kibana
       until: download_kibana is succeeded
+      tags: kibana
     - name: Install Kibana
       become: true
       yum:
         name: "/tmp/kibana-{{ elk_stack_version }}-x86_64.rpm"
         state: present
+      tags: kibana
     - name: chown
       become: true
       file:
         path: /usr/share/kibana
         owner: kibana
         group: kibana
+      tags: kibana
     - name: Configure Kibana
       become: true
       template:
         src: kibana-config.yml.j2
         dest: /etc/kibana/kibana.yml
       notify: start Kibana
+      tags: kibana
 
 - name: Install Filebeat
   hosts: elasticsearch
@@ -74,21 +81,24 @@
         dest: "/tmp/filebeat-{{ elk_stack_version }}-x86_64.rpm"
       register: download_filebeat
       until: download_filebeat is succeeded
+      tags: filebeat
     - name: Install filebeat
       become: true
       yum:
         name: "/tmp/filebeat-{{ elk_stack_version }}-x86_64.rpm"
         state: present
+      tags: filebeat
     - name: enable filebeat service
       become: true
       systemd:
         name: filebeat
         enabled: yes
         masked: no
+      tags: filebeat
     - name: Configure filebeat
       become: true
       template:
         src: filebeat.yml.j2
         dest: /etc/filebeat/filebeat.yml
       notify: start Filebeat
-
+      tags: filebeat
