@@ -40,10 +40,10 @@ node("jenkins-agent-01"){
     }
     stage("Run playbook"){
         if (prod_run){
-              sh 'ansible-playbook -i inventory/prod.yml site.yml -v'
+              sh 'ansible-playbook -i inventory/prod.yml site.yml'
                 }
-		else{
-            sh 'echo "--check --diff"'
+	else{
+              sh 'ansible-playbook -i inventory/prod.yml site.yml --check --diff'
                 }
             }
     }
