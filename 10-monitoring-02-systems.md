@@ -37,3 +37,30 @@
 | Zabbix | Гибридная | 
 | VictoriaMetrics | Гибридная  | 
 | Nagios   | Pull | 
+
+# 3.
+
+$ curl http://localhost:8086/ping
+$ curl -I http://localhost:8086/ping
+HTTP/1.1 204 No Content
+Content-Type: application/json
+Request-Id: d7894c02-7d3a-11ec-805d-0242ac140003
+X-Influxdb-Build: OSS
+X-Influxdb-Version: 1.8.10
+X-Request-Id: d7894c02-7d3a-11ec-805d-0242ac140003
+Date: Mon, 24 Jan 2022 17:27:01 GMT
+
+$ curl http://localhost:8086/ping
+
+$ curl http://localhost:8888
+<!DOCTYPE html><html><head><meta http-equiv="Content-type" content="text/html; charset=utf-8"><title>Chronograf</title><link rel="icon shortcut" href="/favicon.fa749080.ico"><link rel="stylesheet" href="/src.3dbae016.css"></head><body> <div id="react-root" data-basepath=""></div> <script src="/src.fab22342.js"></script> </body></html>
+
+$ curl http://localhost:9092/kapacitor/v1/ping
+
+$ curl -I http://localhost:9092/kapacitor/v1/ping
+HTTP/1.1 204 No Content
+Content-Type: application/json; charset=utf-8
+Request-Id: ecfadcec-7d3a-11ec-8033-000000000000
+X-Kapacitor-Version: 1.6.2
+Date: Mon, 24 Jan 2022 17:27:37 GMT
+
