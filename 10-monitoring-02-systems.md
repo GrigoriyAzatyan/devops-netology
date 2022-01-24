@@ -39,7 +39,22 @@
 | Nagios   | Pull | 
 
 # 3.
+Вроде работает:   
 ![Скриншот](https://github.com/GrigoriyAzatyan/devops-netology/blob/main/TICK.jpg)
+
+Контейнеры запустились:
+
+```
+$ docker ps
+CONTAINER ID   IMAGE                   COMMAND                  CREATED          STATUS          PORTS                                                                                                                             NAMES
+7ed991230565   chrono_config           "/entrypoint.sh chro…"   13 minutes ago   Up 13 minutes   0.0.0.0:8888->8888/tcp, :::8888->8888/tcp  sandbox_chronograf_1
+7d3ee24e59ac   telegraf                "/entrypoint.sh tele…"   13 minutes ago   Up 13 minutes   8092/udp, 8125/udp, 8094/tcp     sandbox_telegraf_1
+71b0b3678d9e   kapacitor               "/entrypoint.sh kapa…"   13 minutes ago   Up 13 minutes   0.0.0.0:9092->9092/tcp, :::9092->9092/tcp  sandbox_kapacitor_1
+27be07161858   influxdb:2.1            "/entrypoint.sh infl…"   13 minutes ago   Up 13 minutes   0.0.0.0:8082->8082/tcp, :::8082->8082/tcp, 0.0.0.0:8086->8086/tcp, :::8086->8086/tcp, 0.0.0.0:8089->8089/udp, :::8089->8089/udp   sandbox_influxdb_1
+fbc70d4af3fa   sandbox_documentation   "/documentation/docu…"   13 minutes ago   Up 13 minutes   0.0.0.0:3010->3000/tcp, :::3010->3000/tcp  sandbox_documentation_1
+```
+
+На запросы к API - пустые ответы. Возможно, потому что система еще не сконфигурирована:
 
 `$ curl http://localhost:8086/ping`   
 
