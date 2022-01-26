@@ -87,3 +87,10 @@ Request-Id: ecfadcec-7d3a-11ec-8033-000000000000
 X-Kapacitor-Version: 1.6.2
 Date: Mon, 24 Jan 2022 17:27:37 GMT
 ```
+# 4.
+![Скриншот](https://github.com/GrigoriyAzatyan/devops-netology/blob/main/telegraf-disk.jpg)
+
+# 5.
+
+
+
