@@ -90,7 +90,11 @@ Date: Mon, 24 Jan 2022 17:27:37 GMT
 # 4. Метрики утилизации места на диске
 ![Скриншот](https://github.com/GrigoriyAzatyan/devops-netology/blob/main/telegraf-disk.jpg)
 
-# 5.
+# 5. Приведите скриншотом список measurments в веб-интерфейсе базы telegraf.autogen. Там должны появиться метрики, связанные с docker.
+
+![Скриншот](https://github.com/GrigoriyAzatyan/devops-netology/blob/main/telegraf-docker2.jpg)
+
+![Скриншот](https://github.com/GrigoriyAzatyan/devops-netology/blob/main/telegraf-docker.jpg)
 
 
 
