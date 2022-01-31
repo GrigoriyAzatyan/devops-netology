@@ -35,6 +35,6 @@ node_load15{instance="nodeexporter:9100",job="nodeexporter"}
 
 
 ## Задание 4
-Здесь причведен [JSON Dashboard-а](https://github.com/GrigoriyAzatyan/devops-netology/blob/main/dashboard.json).
+Здесь приведен [JSON Dashboard-а](https://github.com/GrigoriyAzatyan/devops-netology/blob/main/dashboard.json).
 
 
