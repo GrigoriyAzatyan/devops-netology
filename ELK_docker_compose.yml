@@ -1,19 +1,19 @@
-version: '2.2'.
+version: '2.2'
 
 services:
 
   es-hot:
-    image: docker.elastic.co/elasticsearch/elasticsearch:7.11.0
+    image: 'docker.elastic.co/elasticsearch/elasticsearch:7.11.0'
     container_name: es-hot
     environment:
       - node.name=es-hot
       - cluster.name=es-docker-cluster
-      - discovery.seed_hosts=127.0.0.1:9300
-      - cluster.initial_master_nodes=es-hot,es-warm
+      - 'discovery.seed_hosts=127.0.0.1:9300'
+      - 'cluster.initial_master_nodes=es-hot,es-warm'
       - bootstrap.memory_lock=true
-      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - ES_JAVA_OPTS=-Xms512m -Xmx512m
     volumes:
-      - data01:/usr/share/elasticsearch/data:Z
+      - 'data01:/usr/share/elasticsearch/data:Z'
     ulimits:
       memlock:
         soft: -1
@@ -23,22 +23,22 @@ services:
         hard: 65536
     network_mode: host
     ports:
-      - 9200:9200
+      - '9200:9200'
     depends_on:
       - es-warm
-
+      
   es-warm:
-    image: docker.elastic.co/elasticsearch/elasticsearch:7.11.0
+    image: 'docker.elastic.co/elasticsearch/elasticsearch:7.11.0'
     container_name: es-warm
     environment:
       - node.name=es-warm
       - cluster.name=es-docker-cluster
-      - discovery.seed_hosts=127.0.0.1:9200
-      - cluster.initial_master_nodes=es-hot,es-warm
+      - 'discovery.seed_hosts=127.0.0.1:9200'
+      - 'cluster.initial_master_nodes=es-hot,es-warm'
       - bootstrap.memory_lock=true
-      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - ES_JAVA_OPTS=-Xms512m -Xmx512m
     volumes:
-      - data02:/usr/share/elasticsearch/data:Z
+      - 'data02:/usr/share/elasticsearch/data:Z'
     ulimits:
       memlock:
         soft: -1
@@ -48,58 +48,55 @@ services:
         hard: 65536
     network_mode: host
     ports:
-      - 9300:9300
-
-
+      - '9300:9300'
+      
   kibana:
-    image: docker.elastic.co/kibana/kibana:7.11.0
+    image: 'docker.elastic.co/kibana/kibana:7.11.0'
     container_name: kibana
     network_mode: host
     ports:
-      - 5601:5601
+      - '5601:5601'
     environment:
-      ELASTICSEARCH_URL: http://127.0.0.1:9200
+      ELASTICSEARCH_URL: 'http://127.0.0.1:9200'
       ELASTICSEARCH_HOSTS: '["http://127.0.0.1:9200"]'
     depends_on:
       - es-hot
       - es-warm
-
-
+      
   logstash:
-    image: docker.elastic.co/logstash/logstash:6.3.2
+    image: 'docker.elastic.co/logstash/logstash:6.3.2'
     container_name: logstash
     network_mode: host
     ports:
-      - 5046:5046
+      - '5046:5046'
     volumes:
-      - ./configs/logstash.conf:/etc/logstash/conf.d/logstash.conf:Z
-      - ./configs/logstash.yml:/opt/logstash/config/logstash.yml:Z
+      - './configs/logstash.conf:/etc/logstash/conf.d/logstash.conf:Z'
+      - './configs/logstash.yml:/opt/logstash/config/logstash.yml:Z'
     command: logstash -f /etc/logstash/conf.d/logstash.conf
     depends_on:
       - es-hot
       - es-warm
-......
-
+      
   filebeat:
-    image: "docker.elastic.co/beats/filebeat:7.2.0"
+    image: 'docker.elastic.co/beats/filebeat:7.2.0'
     container_name: filebeat
     privileged: true
     user: root
     network_mode: host
     volumes:
-      - ./configs/filebeat.yml:/usr/share/filebeat/filebeat.yml:Z
-      - /var/lib/docker:/var/lib/docker:Z
-      - /var/run/docker.sock:/var/run/docker.sock:Z
+      - './configs/filebeat.yml:/usr/share/filebeat/filebeat.yml:Z'
+      - '/var/lib/docker:/var/lib/docker:Z'
+      - '/var/run/docker.sock:/var/run/docker.sock:Z'
     depends_on:
       - logstash
-
+      
   some_application:
-    image: library/python:3.9-alpine
+    image: 'library/python:3.9-alpine'
     container_name: some_app
     volumes:
-      - ./pinger/run.py:/opt/run.py:Z
+      - './pinger/run.py:/opt/run.py:Z'
     entrypoint: python3 /opt/run.py.
-
+    
 volumes:
   data01:
     driver: local
