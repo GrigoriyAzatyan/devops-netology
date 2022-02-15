@@ -28,7 +28,7 @@ https://github.com/GrigoriyAzatyan/devops-netology/blob/main/logstash.conf
 https://github.com/GrigoriyAzatyan/devops-netology/blob/main/filebeat.yml  
 
 # Задание 2
-ELK доступна [по этому адресу](http://84.201.159.251:5601/app/discover).
+ELK доступна [по этому адресу](http://84.201.159.251:5601).
 
 Скриншот:  
 ![](https://github.com/GrigoriyAzatyan/devops-netology/blob/main/ELK.jpg)
