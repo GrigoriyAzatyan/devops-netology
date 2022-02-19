@@ -30,5 +30,5 @@ if True == True:
 # Задание 3
 
 ## Cкриншот тела сообщения из оповещения на почте
-![](https://github.com/GrigoriyAzatyan/devops-netology/blob/main/Sentry_events.jpg)
+![](https://github.com/GrigoriyAzatyan/devops-netology/blob/main/Sentry_email.jpg)
 
