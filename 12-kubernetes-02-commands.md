@@ -16,6 +16,145 @@ httpd-deployment-856fbf5ffd-rjtd7   1/1     Running   0          4d
 ```
 
 ## Задание 2: Просмотр логов для разработки
+### Выполненные команды:   
+```
+openssl genrsa -out jean.key 2048
+openssl req -new -key jean.key -out jean.csr -subj "/CN=jean"
+openssl x509 -req -in jean.csr -CA /var/lib/minikube/certs/ca.crt -CAkey /var/lib/minikube/certs/ca.key -CAcreateserial -out jean.crt -days 500
+useradd -s /bin/bash jean
+passwd jean
+mkdir /home/jean/.certs && mv jean.* /home/jean/.certs
+kubectl create namespace app-namespace
+kubectl run nginx --image=nginx --namespace=app-namespace
+kubectl config set-credentials jean --client-certificate=/home/jean/.certs/jean.crt --client-key=/home/jean/.certs/jean.key
+kubectl config set-context jean-context --cluster=minikube --user=jean --namespace=app-namespace
+```
+
+### Конфиг пользователя jean:
+```
+mkdir /home/jean/.kube && nano /home/jean/.kube/config
+
+apiVersion: v1
+clusters:
+- cluster:
+    certificate-authority: /var/lib/minikube/certs/ca.crt
+    extensions:
+    - extension:
+        last-update: Sun, 03 Apr 2022 09:00:50 UTC
+        provider: minikube.sigs.k8s.io
+        version: v1.25.2
+      name: cluster_info
+    server: https://10.128.0.19:8443
+  name: minikube
+contexts:
+- context:
+    cluster: minikube
+    user: jean
+  name: jean-context
+current-context: jean-context
+kind: Config
+preferences: {}
+users:
+- name: jean
+  user:
+    client-certificate: /home/jean/.certs/jean.crt
+    client-key: /home/jean/.certs/jean.key
+```
+
+### Дальнейшие команды:
+```
+chown -R jean:jean /home/jean
+```
+
+### Yaml для роли:
+
+cat ./role.yaml
+
+```
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: read-pods
+  namespace: app-namespace
+rules:
+- apiGroups: ["","extensions", "apps"]
+  resources: ["pods", "pods/log"]
+  verbs: ["get", "watch", "list"]
+```
+
+### Yaml для rolebinding:
+
+cat ./role-binding.yaml
+
+```
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: jean
+  namespace: app-namespace
+subjects:
+- kind: User
+  name: jean
+  apiGroup: ""
+roleRef:
+  kind: Role
+  name: read-pods
+  apiGroup: ""
+```
+
+### Дальнейшие команды:
+```
+kubectl create -f ./role.yaml
+kubectl create -f ./role-binding.yaml
+```
+
+### Окончательный конфиг кластера:
+kubectl config view
+
+```
+apiVersion: v1
+clusters:
+- cluster:
+    certificate-authority: /root/.minikube/ca.crt
+    extensions:
+    - extension:
+        last-update: Mon, 14 Mar 2022 17:32:37 UTC
+        provider: minikube.sigs.k8s.io
+        version: v1.25.2
+      name: cluster_info
+    server: https://10.128.0.19:8443
+  name: minikube
+contexts:
+- context:
+    cluster: minikube
+    namespace: app-namespace
+    user: jean
+  name: jean-context
+- context:
+    cluster: minikube
+    extensions:
+    - extension:
+        last-update: Mon, 14 Mar 2022 17:32:37 UTC
+        provider: minikube.sigs.k8s.io
+        version: v1.25.2
+      name: context_info
+    namespace: default
+    user: minikube
+  name: minikube
+current-context: minikube
+kind: Config
+preferences: {}
+users:
+- name: jean
+  user:
+    client-certificate: /home/jean/.certs/jean.crt
+    client-key: /home/jean/.certs/jean.key
+- name: minikube
+  user:
+    client-certificate: /root/.minikube/profiles/minikube/client.crt
+    client-key: /root/.minikube/profiles/minikube/client.key
+
+```
 
 ### Авторизуемся под пользователем jean:   
 ```
