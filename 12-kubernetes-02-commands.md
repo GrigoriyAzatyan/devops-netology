@@ -108,53 +108,6 @@ kubectl create -f ./role.yaml
 kubectl create -f ./role-binding.yaml
 ```
 
-### Окончательный конфиг кластера:
-kubectl config view
-
-```
-apiVersion: v1
-clusters:
-- cluster:
-    certificate-authority: /root/.minikube/ca.crt
-    extensions:
-    - extension:
-        last-update: Mon, 14 Mar 2022 17:32:37 UTC
-        provider: minikube.sigs.k8s.io
-        version: v1.25.2
-      name: cluster_info
-    server: https://10.128.0.19:8443
-  name: minikube
-contexts:
-- context:
-    cluster: minikube
-    namespace: app-namespace
-    user: jean
-  name: jean-context
-- context:
-    cluster: minikube
-    extensions:
-    - extension:
-        last-update: Mon, 14 Mar 2022 17:32:37 UTC
-        provider: minikube.sigs.k8s.io
-        version: v1.25.2
-      name: context_info
-    namespace: default
-    user: minikube
-  name: minikube
-current-context: minikube
-kind: Config
-preferences: {}
-users:
-- name: jean
-  user:
-    client-certificate: /home/jean/.certs/jean.crt
-    client-key: /home/jean/.certs/jean.key
-- name: minikube
-  user:
-    client-certificate: /root/.minikube/profiles/minikube/client.crt
-    client-key: /root/.minikube/profiles/minikube/client.key
-
-```
 
 ### Авторизуемся под пользователем jean:   
 ```
