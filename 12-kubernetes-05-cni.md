@@ -54,7 +54,7 @@ Commercial support is available at
 
 ## Создаем запрещающую политику по умолчанию
 
-nano web-deny-all.yaml
+`nano web-deny-all.yaml`
 
 ```
 kind: NetworkPolicy
