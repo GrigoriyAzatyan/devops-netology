@@ -4,14 +4,58 @@
 
 ```
 kubectl create deployment echoserver --image=bluebrown/echoserver
-kubectl expose deployment echoserver --type=ClusterIP --port=8080
+kubectl expose deployment echoserver --type=ClusterIP --port=80
 ```
 
 ```
 kubectl get service echoserver
-NAME         TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)    AGE
-echoserver   ClusterIP   10.12.0.86   <none>        8080/TCP   36m
+NAME         TYPE        CLUSTER-IP    EXTERNAL-IP   PORT(S)   AGE
+echoserver   ClusterIP   10.12.0.111   <none>        80/TCP    8s
+
 ```
+
+## Создаем два пода, один маркируем меткой access=true
+
+```
+kubectl run -i -t --image=alpine test1 
+kubectl run -i -t --image=alpine test2 
+kubectl label pod test2 access=true
+```
+
+## Проверяем, что по умолчанию все работает
+
+`kubectl attach test1 -c test1 -i -t`
+
+
+`/ # wget -qO- --timeout=2 http://web`
+
+```
+<!DOCTYPE html>
+<html>
+<head>
+<title>Welcome to nginx!</title>
+<style>
+html { color-scheme: light dark; }
+body { width: 35em; margin: 0 auto;
+font-family: Tahoma, Verdana, Arial, sans-serif; }
+</style>
+</head>
+<body>
+<h1>Welcome to nginx!</h1>
+<p>If you see this page, the nginx web server is successfully installed and
+working. Further configuration is required.</p>
+
+<p>For online documentation and support please refer to
+<a href="http://nginx.org/">nginx.org</a>.<br/>
+Commercial support is available at
+<a href="http://nginx.com/">nginx.com</a>.</p>
+
+<p><em>Thank you for using nginx.</em></p>
+</body>
+</html>
+```
+
+
 
 
 ## Проверяем доступ с соседнего пода
