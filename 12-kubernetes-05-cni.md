@@ -66,8 +66,8 @@ spec:
   policyTypes:
     - Ingress
 ```
-
-`kubectl apply -f web-deny-all.yaml`
+ 
+`kubectl apply -f web-deny-all.yaml`  
 `networkpolicy.networking.k8s.io/web-deny-all created`
 
 
