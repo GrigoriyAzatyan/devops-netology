@@ -3,19 +3,24 @@
 ## Разверываем echoserver, публикуем на порту 8080  
 
 ```
-kubectl create namespace ingress-nginx
-kubectl create deployment echoserver --image=bluebrown/echoserver --namespace=ingress-nginx
-kubectl expose deployment echoserver --type=ClusterIP --port=8080 --namespace=ingress-nginx
+kubectl create deployment echoserver --image=bluebrown/echoserver
+kubectl expose deployment echoserver --type=ClusterIP --port=8080
 ```
+
+```
+kubectl get service echoserver
+NAME         TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)    AGE
+echoserver   ClusterIP   10.12.0.86   <none>        8080/TCP   36m
+```
+
 
 ## Проверяем доступ с соседнего пода
 
-`root@cp1:/home/user/policies# kubectl run --rm -it --image=alpine test-$RANDOM -- sh`
+`kubectl run --rm -it --image=alpine test-$RANDOM -- sh`
 
 ```
 If you don't see a command prompt, try pressing enter.
-/ # wget -qO- http://echoserver:8080
-wget: bad address 'echoserver:8080'
+
 / # wget -qO- http://10.12.0.86:8080
 OS HOSTNAME: echoserver-86cd9cfc59-w7gpm
 
@@ -26,8 +31,26 @@ Connection: close
 User-Agent: Wget
 ```
 
+## Создаем запрещающую политику по умолчанию
+
+nano default.yml
+
+```
+
+```
 
 
+`kubectl apply -f default.yml`
+`networkpolicy.networking.k8s.io/default-deny-ingress created`
+
+
+
+
+
+
+
+
+```
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
@@ -41,7 +64,7 @@ spec:
     - Ingress
   ingress: 
     - {}
-  
+ ``` 
 
 
 
