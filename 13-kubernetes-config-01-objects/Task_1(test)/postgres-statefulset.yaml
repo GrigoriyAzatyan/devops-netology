@@ -32,6 +32,8 @@ spec:
               value: postgres
             - name: PGDATA
               value: /bitnami/postgresql
+            - name: POSTGRES_DB
+              value: news
   volumeClaimTemplates:
     - metadata:
         name: postgresql-db-disk
