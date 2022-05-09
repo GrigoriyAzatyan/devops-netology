@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: frontend
+  name: frontend
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frontend
+  template:
+    metadata:
+      labels:
+        app: frontend
+    spec:
+      containers:
+      - image: gregory78/13-kubernetes-config_frontend:v1.0
+        imagePullPolicy: IfNotPresent
+        name: frontend
+        env:
+          - name: BASE_URL
+            value: "http://backend-svc:9000"
+ 

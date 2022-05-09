@@ -1,0 +1,10 @@
+# PostgreSQL StatefulSet ConfigMap
+apiVersion: v1
+kind: ConfigMap
+metadata:
+    name: postgres-db-config
+    labels:
+        app: postgresql-app
+data:
+    POSTGRESQL_PASSWORD: postgres
+    PGDATA: /bitnami/postgresql

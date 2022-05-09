@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: postgresql-sts
+spec:
+  serviceName: postgresql-svc
+  selector:
+    matchLabels:
+      app: postgresql-app
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: postgresql-app
+    spec:
+      securityContext:
+        fsGroup: 1001
+      containers:
+        - name: postgresql
+          image: 'bitnami/postgresql:latest'
+          securityContext:
+            runAsUser: 0
+          ports:
+            - name: postgresql
+              containerPort: 5432
+              protocol: TCP
+          volumeMounts:
+            - name: postgresql-db-disk
+              mountPath: /bitnami/postgresql
+          env:
+            - name: POSTGRESQL_PASSWORD
+              value: postgres
+            - name: PGDATA
+              value: /bitnami/postgresql
+  volumeClaimTemplates:
+    - metadata:
+        name: postgresql-db-disk
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 1Gi
+

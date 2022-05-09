@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: backend
+  name: backend
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      containers:
+      - image: gregory78/13-kubernetes-config_backend:v1.0
+        imagePullPolicy: IfNotPresent
+        name: backend
+        env:
+        - name: DATABASE_URL
+          value: "postgresql://postgres:postgres@postgresql-svc:5432/news"
