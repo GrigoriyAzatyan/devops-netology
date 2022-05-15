@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: apache-prod-frontend
+  name: prod-depl-frontend
+  namespace: default
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: apache-prod-frontend
+  template:
+    metadata:
+      labels:
+        app: apache-prod-frontend
+    spec:
+      containers:
+        - image: httpd
+          imagePullPolicy: IfNotPresent
+          name: frontend
+          volumeMounts:
+            - mountPath: /usr/local/apache2/htdocs
+              name: nfs-volume
+      volumes:
+        - name: nfs-volume
+          persistentVolumeClaim:
+            claimName: pvc-nfs

@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: apache-prod-backend
+  name: prod-depl-backend
+  namespace: default
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: apache-prod-backend
+  template:
+    metadata:
+      labels:
+        app: apache-prod-backend
+    spec:
+      containers:
+        - image: alpine
+          imagePullPolicy: IfNotPresent
+          name: backend
+          command: ['sh', '-c', 'while true; do sleep 3600; done']
+          volumeMounts:
+            - mountPath: /static
+              name: nfs-volume
+      volumes:
+        - name: nfs-volume
+          persistentVolumeClaim:
+            claimName: pvc-nfs
