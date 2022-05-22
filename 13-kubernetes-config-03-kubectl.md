@@ -10,7 +10,7 @@ kubectl port-forward service/postgresql-svc 5432:5432 --address=0.0.0.0 &
 
 ## 1.1. Frontend
 
-* Port-forward
+* Port-forward   
 
 `curl http://192.168.1.106`
 
@@ -32,8 +32,10 @@ Handling connection for 80
     <script src="/build/main.js"></script>
 </body>
 </html>
+```
 
-* Exec
+* Exec   
+
 `kubectl exec -it frontend-645767c6-sc8fd -c frontend -- curl http://backend-svc:9000`
 
 ```
@@ -43,7 +45,7 @@ Handling connection for 80
 
 ## 1.2. Backend
 
-* Port-forward
+* Port-forward   
 
 `curl http://192.168.1.106:81`
 
@@ -52,7 +54,7 @@ Handling connection for 81
 {"detail":"Not Found"}
 ```
 
-* Exec
+* Exec   
 
 ```
 kubectl exec -it backend-db8847ff5-ckjpf -c backend -- sh -c 'apt-get -y install postgresql-client && psql news -h postgresql-svc -U postgres -c "select id from public.news limit 10"'
@@ -85,7 +87,7 @@ Password for user postgres:
 
 ## 1.3. PostgreSQL
 
-* Port-forward
+* Port-forward   
 
 `psql news -U postgres -h 192.168.1.106 -c "select id from public.news limit 10"`
 
@@ -107,7 +109,7 @@ Password for user postgres:
 ```
 
 
-* Exec
+* Exec   
 
 `kubectl exec -it postgresql-sts-0 -c postgresql -- sh -c 'psql news -U postgres -c "select id from public.news limit 10"'`
 
