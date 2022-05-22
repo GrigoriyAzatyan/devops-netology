@@ -134,6 +134,8 @@ Password for user postgres:
 
 # Задание 2
 
+## Масштабируем до 3 реплик
+
 ```
 kubectl scale --replicas=3 deploy/backend
 deployment.apps/backend scaled
@@ -156,6 +158,8 @@ frontend-645767c6-sc8fd               1/1     Running   0          41m    10.244
 nfs-server-nfs-server-provisioner-0   1/1     Running   0          85m    10.244.0.152   node1   <none>           <none>
 postgresql-sts-0                      1/1     Running   0          78s    10.244.0.162   node2   <none>           <none>
 ```
+
+## Масштабируем до 1 реплики
 
 ```
 kubectl scale --replicas=1 deploy/backend`
