@@ -159,10 +159,10 @@ nfs-server-nfs-server-provisioner-0   1/1     Running   0          85m    10.244
 postgresql-sts-0                      1/1     Running   0          78s    10.244.0.162   node2   <none>           <none>
 ```
 
-## Масштабируем до 1 реплики
+## Масштабируем обратно до 1 реплики
 
 ```
-kubectl scale --replicas=1 deploy/backend`
+kubectl scale --replicas=1 deploy/backend
 deployment.apps/backend scaled
 
 root@cp1:/home/user/13.1/Task_2(production)# kubectl scale --replicas=1 deploy/frontend
