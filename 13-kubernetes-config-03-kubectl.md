@@ -1,3 +1,5 @@
+# Задание 1
+
 ## 1. Настройка проброса портов
 
 ```
@@ -129,3 +131,49 @@ Password for user postgres:
  10
 (10 rows)
 ```
+
+# Задание 2
+
+```
+kubectl scale --replicas=3 deploy/backend
+deployment.apps/backend scaled
+
+kubectl scale --replicas=3 deploy/frontend
+deployment.apps/frontend scaled
+
+```
+
+`kubectl get pods -o wide`
+
+```
+NAME                                  READY   STATUS    RESTARTS   AGE    IP             NODE    NOMINATED NODE   READINESS GATES
+backend-db8847ff5-2d47f               1/1     Running   0          3m9s   10.244.0.158   node2   <none>           <none>
+backend-db8847ff5-ckjpf               1/1     Running   0          41m    10.244.0.155   node2   <none>           <none>
+backend-db8847ff5-r4gqx               1/1     Running   0          110s   10.244.0.161   node2   <none>           <none>
+frontend-645767c6-9m79q               1/1     Running   0          3m3s   10.244.0.160   node1   <none>           <none>
+frontend-645767c6-bvmhg               1/1     Running   0          3m3s   10.244.0.159   node2   <none>           <none>
+frontend-645767c6-sc8fd               1/1     Running   0          41m    10.244.0.156   node2   <none>           <none>
+nfs-server-nfs-server-provisioner-0   1/1     Running   0          85m    10.244.0.152   node1   <none>           <none>
+postgresql-sts-0                      1/1     Running   0          78s    10.244.0.162   node2   <none>           <none>
+```
+
+```
+kubectl scale --replicas=1 deploy/backend`
+deployment.apps/backend scaled
+
+root@cp1:/home/user/13.1/Task_2(production)# kubectl scale --replicas=1 deploy/frontend
+deployment.apps/frontend scaled
+```
+
+`kubectl get pods -o wide`
+
+```
+NAME                                  READY   STATUS    RESTARTS   AGE     IP             NODE    NOMINATED NODE   READINESS GATES
+backend-db8847ff5-ckjpf               1/1     Running   0          43m     10.244.0.155   node2   <none>           <none>
+frontend-645767c6-9m79q               1/1     Running   0          5m30s   10.244.0.160   node1   <none>           <none>
+nfs-server-nfs-server-provisioner-0   1/1     Running   0          88m     10.244.0.152   node1   <none>           <none>
+postgresql-sts-0                      1/1     Running   0          3m45s   10.244.0.162   node2   <none>           <none>
+```
+
+
+
