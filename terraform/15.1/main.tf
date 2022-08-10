@@ -46,8 +46,6 @@ resource "yandex_vpc_route_table" "nat-route" {
   }
 }
 
-
-
 # NAT-инстанс
 resource "yandex_compute_instance" "nat-instance" {
   name = "nat-instance"
@@ -82,6 +80,7 @@ resource "yandex_compute_instance" "nat-instance" {
 output "external_ip_address_nat-instance" {
   value = yandex_compute_instance.nat-instance.network_interface.0.nat_ip_address
 }
+
 # Публичная ВМ
 
 resource "yandex_compute_instance" "public-instance" {
@@ -112,7 +111,6 @@ output "external_ip_address_public-instance" {
   value = yandex_compute_instance.public-instance.network_interface.0.nat_ip_address
 }
 
-
 # Виртуалка с внутренним IP
 
 resource "yandex_compute_instance" "private-instance" {
@@ -139,7 +137,7 @@ resource "yandex_compute_instance" "private-instance" {
   }
 }
 
-output "external_ip_address_private-instance" {
+output "internal_ip_address_private-instance" {
   value = yandex_compute_instance.private-instance.network_interface.0.ip_address
 }
 
